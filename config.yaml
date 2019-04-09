@@ -1,0 +1,22 @@
+# nếu bản 0.84 trở lên thì nhập right, không thì nhập left
+version_above084: right
+# nhập vào đường dẫn vào hass đang hoạt động, luôn cả https,http và port nếu có
+domain: https://thangsmarthome.duckdns.org
+# nếu version trên 0.84 thì nhập long-lived token, dưới 0.84 thì nhập trong hass_password
+hass_password: pass
+longlived-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI3MGZhOTI5MjM2ZjQ0ZjdlOTY2MTM3YmNmNTE3YTgxYiIsImlhdCI6MTU1MTg4ODA5MSwiZXhwIjoxODY3MjQ4MDkxfQ.5x2g9s6rOZxw_4EzHnxEeJAnS367GCKtaap2rsxBxYA
+# model là file training giọng nói trên snowboy
+model: jarvis.umdl
+hotword: jarvis,jarvis
+sensitivity: [0.62,0.62]
+# giọng trả lời, api của fpt, các bạn tự đăng ký lấy api để dùng cho riêng mình (để nhanh là ổn định)
+# male, female
+voice: male 
+api_fpt: 64e87f2e9d784287b4e756c99d65ec53
+# api darksky để lấy thông tin thời tiết (tự đăng ký hoặc lấy bên hass đưa vào)
+api_darksky: c457d056f60c2aa93fd47339aad294da
+# file credential của google (tự đăng ký)
+google_application_credentials: thanggam.json
+led_do: 15
+led_xanh: 14
+reminder: 1
