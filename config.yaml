@@ -20,3 +20,4 @@ google_application_credentials: bot.json
 led_do: 15
 led_xanh: 14
 reminder: 1
+stand_alone: 0
