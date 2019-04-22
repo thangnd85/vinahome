@@ -1,14 +1,19 @@
 # nếu bản 0.84 trở lên thì nhập right, không thì nhập left
 version_above084: right
 # nhập vào đường dẫn vào hass đang hoạt động, luôn cả https,http và port nếu có
-domain: https://domain.duckdns.org
+domain: 
 # nếu version trên 0.84 thì nhập long-lived token, dưới 0.84 thì nhập trong hass_password
 hass_password: pass
-longlived-token: token_trong_hass
+longlived-token: 
 # model là file training giọng nói trên snowboy
+# 2 model
 model: jarvis.umdl
 hotword: jarvis,jarvis
-sensitivity: [0.62,0.62]
+sensitivity: [0.70,0.70]
+# 1 model
+#model: subex.umdl
+#hotword: subex
+#sensitivity: 0.70
 # giọng trả lời, api của fpt, các bạn tự đăng ký lấy api để dùng cho riêng mình (để nhanh là ổn định)
 # male, female
 voice: male 
@@ -21,3 +26,4 @@ led_do: 15
 led_xanh: 14
 reminder: 1
 stand_alone: 0
+api_active: 1
