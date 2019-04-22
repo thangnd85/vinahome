@@ -1,7 +1,7 @@
 1. Cài mới
 Tải về và cài đặt
 
-           git clone https://github.com/thangnd85/lbminh-bot/ 
+          git clone https://github.com/thangnd85/lbminh-bot/ 
     
           sudo chmod 777 -R /lbminh-bot 
     
