@@ -1,0 +1,10 @@
+#!/bin/bash
+systemctl stop bot.service
+rm -rf /home/pi/lbminh-bot/include
+rm /home/pi/lbminh-bot/dem.py
+cd /lbminh-bot
+rm dem.so
+rm st.so
+wget -r --no-parent  https://github.com/drlbminh/lbminh-bot/blob/master/dem.so
+wget -r --no-parent  https://github.com/drlbminh/lbminh-bot/blob/master/st.so
+systemctl start bot.service
