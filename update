@@ -7,4 +7,6 @@ rm dem.so
 rm st.so
 wget -r --no-parent  https://github.com/thangnd85/lbminh-bot/blob/master/dem.so
 wget -r --no-parent  https://github.com/thangnd85/lbminh-bot/blob/master/st.so
+cd
+chmod 777 -R lbminh-bot
 systemctl start bot.service
