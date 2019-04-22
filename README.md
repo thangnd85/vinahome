@@ -6,11 +6,11 @@ cd lbminh-bot
 python3 setupLBMINHBOT.py
 python3 main.py
 
-Update từ bản docker imgage: 
+2. Update từ bản docker imgage: 
 sudo su
 curl -sL https://raw.githubusercontent.com/thangnd85/lbminh-bot/master/update  | bash -s
 
-Update từ bản rất cũ
+3. Update từ bản rất cũ
 Xóa folder lbminh-bot rồi làm lại như cài mới
 
 
