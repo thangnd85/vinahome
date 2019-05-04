@@ -1,5 +1,2 @@
 import st
 
-
-
-st.install()

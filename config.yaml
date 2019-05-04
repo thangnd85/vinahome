@@ -1,29 +1,33 @@
-# nếu bản 0.84 trở lên thì nhập right, không thì nhập left
-version_above084: right
-# nhập vào đường dẫn vào hass đang hoạt động, luôn cả https,http và port nếu có
-domain: 
-# nếu version trên 0.84 thì nhập long-lived token, dưới 0.84 thì nhập trong hass_password
-hass_password: pass
-longlived-token: 
-# model là file training giọng nói trên snowboy
-# 2 model
-model: jarvis.umdl
-hotword: jarvis,jarvis
-sensitivity: [0.70,0.70]
-# 1 model
-#model: subex.umdl
-#hotword: subex
-#sensitivity: 0.70
-# giọng trả lời, api của fpt, các bạn tự đăng ký lấy api để dùng cho riêng mình (để nhanh là ổn định)
-# male, female
-voice: male 
-api_fpt: 64e87f2e9d784287b4e756c99d65ec53
-# api darksky để lấy thông tin thời tiết (tự đăng ký hoặc lấy bên hass đưa vào)
-api_darksky: c457d056f60c2aa93fd47339aad294da
-# file credential của google (tự đăng ký)
+# API GOOGLE. Nhập 1 nếu bạn có.
+api_active: 0
+# Khi dòng trên là 1 thì phải quăng cái file json vào đúng chỗ, đúng tên.
 google_application_credentials: bot.json
+# Nếu muốn kiểm tra thông tin thời tiết tại khu vực mình thì nhập nhé
+api_darksky: null
+# Để dảnh thôi, chứ giờ dùng Google đọc rồi. Sau này ai thích nghe FPT thì dev sẽ làm thêm giờ :))
+api_fpt: null
+voice: male
+# Cái này chắc không cần giải thích. Trên 084 thì dùng longlived-token nhé.
+domain: https://
+longlived-token: cl1teS2AX4
+hass_password: pass
+version_above084: right
+# Phần này cài đặt cho bot. Lưu ý hotword tự trên là file đuôi .pdml còn mấy cái universal mới là udml nhé.
+hotword: subex
+model: subex.umdl
+sensitivity: 0.9
+# Một số hotword chứa 2 model như thằng jarvis thì cần phải sửa lại như sau.
+# hotword: jarvis,jarvis
+# model: jarvis.udml
+# sensitivity: [0.8,0.8]
+
+# Cái này ai thích nghe nó nhắc ngày rằm, mùng 1 thì để 1 nhé.
+reminder: 1
+# Mấy cái này chắc bỏ qua đi =))
 led_do: 15
 led_xanh: 14
-reminder: 1
-stand_alone: 0
-api_active: 1
+# Ai không hiểu thì lên telegram để chat nhé. Trên đó lâu lâu cũng có người hỗ trợ đó :))
+
+
+
+
