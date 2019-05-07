@@ -1,33 +1,19 @@
-# API GOOGLE. Nhập 1 nếu bạn có.
-api_active: 0
-# Khi dòng trên là 1 thì phải quăng cái file json vào đúng chỗ, đúng tên.
-google_application_credentials: bot.json
-# Nếu muốn kiểm tra thông tin thời tiết tại khu vực mình thì nhập nhé
+api_active: 1
 api_darksky: null
-# Để dảnh thôi, chứ giờ dùng Google đọc rồi. Sau này ai thích nghe FPT thì dev sẽ làm thêm giờ :))
 api_fpt: null
-voice: male
-# Cái này chắc không cần giải thích. Trên 084 thì dùng longlived-token nhé.
-domain: https://
-longlived-token: cl1teS2AX4
-hass_password: pass
-version_above084: right
-# Phần này cài đặt cho bot. Lưu ý hotword tự trên là file đuôi .pdml còn mấy cái universal mới là udml nhé.
-hotword: subex
-model: subex.umdl
-sensitivity: 0.9
-# Một số hotword chứa 2 model như thằng jarvis thì cần phải sửa lại như sau.
-# hotword: jarvis,jarvis
-# model: jarvis.udml
-# sensitivity: [0.8,0.8]
+tts: google
+domain: abc
 
-# Cái này ai thích nghe nó nhắc ngày rằm, mùng 1 thì để 1 nhé.
-reminder: 1
-# Mấy cái này chắc bỏ qua đi =))
+google_application_credentials: botallis.json
+hass_password: pass
+hotword: jarvis
 led_do: 15
 led_xanh: 14
-# Ai không hiểu thì lên telegram để chat nhé. Trên đó lâu lâu cũng có người hỗ trợ đó :))
-
-
-
-
+longlived-token: abc
+model: jarvis.umdl
+reminder: 1
+sensitivity:
+- 0.8
+- 0.8
+version_above084: right
+voice: male
