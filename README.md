@@ -12,6 +12,6 @@ Tải về và cài đặt
 
 
 3. Update từ bản rất cũ
-
+Do thay đổi về cơ chế xác nhận key, nên ai đã mua thì liên hệ Minh để được cấp key lại nhé. 
 
 
