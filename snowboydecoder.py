@@ -71,7 +71,7 @@ def play_audio_file(fname=DETECT_DING):
         rate=ding_wav.getframerate(), input=False, output=True)
     stream_out.start_stream()
     stream_out.write(ding_data)
-    time.sleep(0.2)
+    time.sleep(0.05)
     stream_out.stop_stream()
     stream_out.close()
     audio.terminate()
@@ -95,7 +95,7 @@ class HotwordDetector(object):
     def __init__(self, decoder_model,
                  resource=RESOURCE_FILE,
                  sensitivity=[],
-                 audio_gain=2,
+                 audio_gain=1,
                  apply_frontend=True):
 
         tm = type(decoder_model)
@@ -129,7 +129,7 @@ class HotwordDetector(object):
               interrupt_check=lambda: False,
               sleep_time=0.03,
               audio_recorder_callback=None,
-              silent_count_threshold=15,
+              silent_count_threshold=5,
               recording_timeout=100):
         """
         Start the voice detector. For every `sleep_time` second it checks the
