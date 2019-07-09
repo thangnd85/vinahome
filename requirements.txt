@@ -9,8 +9,8 @@ pyAesCrypt
 cffi 
 google-cloud-speech 
 six 
-googletrans ,
-wikipedia ,
+googletrans
+wikipedia
 forecastiopy 
 click 
 pyyaml
@@ -26,7 +26,7 @@ SpeechRecognition
 underthesea
 numpy
 feedparser
-lxml==4.3.1
+lxml
 mutagen
 pyaudio
 pulsectl
