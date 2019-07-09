@@ -19,7 +19,7 @@ bs4
 datefinder
 pafy
 youtube_dl
-pyalsaaudio 
+
 gTTS 
 python-vlc 
 SpeechRecognition
