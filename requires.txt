@@ -1,7 +1,0 @@
-request
-speechrecognition
-termcolor
-wikipedia
-forecastiopy
-googletrans
-kivy
