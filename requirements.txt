@@ -1,0 +1,41 @@
+PySDL2
+wheel
+requests 
+regex 
+pya20
+pygame 
+termcolor
+pyAesCrypt 
+cffi 
+google-cloud-speech 
+six 
+googletrans ,
+wikipedia ,
+forecastiopy 
+click 
+pyyaml
+datetime
+bs4
+datefinder
+pafy
+youtube_dl
+pyalsaaudio 
+gTTS 
+python-vlc 
+SpeechRecognition
+underthesea
+numpy
+feedparser
+lxml==4.3.1
+mutagen
+pyaudio
+pulsectl
+spotipy
+google-assistant-library
+google-assistant-sdk[samples]
+google-auth-oauthlib[tool]
+google-assistant-grpc
+spidev
+git+https://github.com/plamere/spotipy.git --upgrade
+fuzzywuzzy
+python-Levenshtein
