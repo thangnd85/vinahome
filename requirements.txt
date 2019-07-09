@@ -36,6 +36,6 @@ google-assistant-sdk[samples]
 google-auth-oauthlib[tool]
 google-assistant-grpc
 spidev
-git+https://github.com/plamere/spotipy.git --upgrade
+git+https://github.com/plamere/spotipy.git
 fuzzywuzzy
 python-Levenshtein
