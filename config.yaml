@@ -1,19 +1,30 @@
 api_active: 1
-api_darksky: null
-api_fpt: null
-tts: google
-domain: abc
-
-google_application_credentials: botallis.json
+api_darksky: c457d056f60c2aa93fd47339aad294da
+toado: 
+- 11.555358
+- 106.172483
+api_fpt: 64e87f2e9d784287b4e756c99d65ec53
+domain: http://192.168.1.247:8123
+google_application_credentials: gapi.json
 hass_password: pass
-hotword: jarvis
+hotword: jarvis,jarvis,subex
 led_do: 15
 led_xanh: 14
-longlived-token: abc
-model: jarvis.umdl
-reminder: 1
+longlived-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmYzU1MDYyODEyNWI0MGJiYTdlODliMjM4ZWU2ZDU5MCIsImlhdCI6MTU3Mjc1MjU0NCwiZXhwIjoxODg4MTEyNTQ0fQ.Q2ubic9GLj5Xcyj4HJCKd9WJHoQr12pp7sJki4T4Y0c
+model:
+- jarvis.umdl
+- subex.umdl
+reminder: 0
 sensitivity:
 - 0.8
 - 0.8
+- 0.6
+stand_alone: 0
+tts: fpt
 version_above084: right
-voice: male
+voice: leminh
+seed: 1
+spotify: 1
+spotify_username: ndt.spotify@gmail.com
+spotify_client_id: 652d7fe6b87c4c5d852d042c5ca6c47f
+spotify_client_secret: 4d723ee2fffa4503b3ecdc81a5c8b5e3

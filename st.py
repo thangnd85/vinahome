@@ -17,12 +17,9 @@ print ('BẮT ĐẦU CÀI ĐẶT ........')
 
 
 def install():
-	os.system('sudo apt-get -y -qq install curl apt-transport-https >> /dev/null')
-	os.system('sudo curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -')
-	os.system("echo 'deb https://dtcooper.github.io/raspotify raspotify main' | sudo tee /etc/apt/sources.list.d/raspotify.list")
 	c=[]
 	d=[]
-	a=['sox','libsdl-mixer1.2','swig','libatlas-base-dev','python3-pyaudio','vlc','python-setuptools','build-essential', 'libsdl1.2-dev', 'libfreetype6-dev', 'libsdl-dev', 'libsdl-image1.2-dev', 'libsdl-mixer1.2-dev', 'libsdl-ttf2.0-dev', 'libsmpeg-dev', 'libportmidi-dev', 'libavformat-dev', 'libswscale-dev', 'python3-dev', 'python3-numpy', 'python3-cffi', 'libffi-dev','libcurl4-openssl-dev','libssl1.0-dev','libsoup2.4-dev','libgcrypt20-dev','libgstreamer-plugins-bad1.0-dev','gstreamer1.0-plugins-good','libasound2-dev', 'flac','curl','apt-transport-https','libportaudio0','libportaudio2','libportaudiocpp0','portaudio19-dev','raspotify']
+	a=['sox','libasound-dev','libsdl-mixer1.2','swig','libatlas-base-dev','pulseaudio','python3-pyaudio','python-pyaudio','vlc','python-setuptools','python-dev','build-essential', 'libsdl1.2-dev', 'libfreetype6-dev', 'libsdl-dev', 'libsdl-image1.2-dev', 'libsdl-mixer1.2-dev', 'libsdl-ttf2.0-dev', 'libsmpeg-dev', 'libportmidi-dev', 'libavformat-dev', 'libswscale-dev', 'python3-dev', 'python3-numpy', 'python3-cffi', 'libffi-dev','libcurl4-openssl-dev','libssl1.0-dev','libsoup2.4-dev','libgcrypt20-dev','libgstreamer-plugins-bad1.0-dev','gstreamer1.0-plugins-good','libasound2-dev', 'flac']
 	print('')
 	time.sleep(1)
 	print('[SETUP] - TRONG QUÁ TRÌNH CÀI ĐẶT VUI LÒNG TRẢ LỜI CÁC YÊU CẦU Y/N: ')
@@ -36,13 +33,9 @@ def install():
 	print('---------------------ĐANG KIỂM TRA CẬP NHẬT HỆ THỐNG ---------------------------')
 	up=os.system('sudo apt-get update >> /dev/null')
 	if up==0 or up==1:
-		print('ĐANG GỠ BỎ PYTHON2 RA KHỎI HỆ THỐNG')
-		os.system('sudo apt remove  --purge -y -qq python >> /dev/null')
-#		print('CÀI ĐẶT LẠI PULSEAUDIO: ')
-#		os.system('sudo apt remove --purge -y -qq pulseaudio >>/dev/null')
 		print('ĐANG NÂNG CẤP HỆ THỐNG. VUI LÒNG PHA THÊM SỮA  .....')
 		os.system('sudo apt-get -y -qq upgrade  >> /dev/null')
-
+		
 		print('ĐANG CÀI ĐẶT CÁC ỨNG DỤNG CẦN THIẾT. HÃY KIÊN NHẪN ....')
 		print('Tổng số ứng dụng: '+str(len(a)-1))
 	print ("ĐANG CÀI ĐẶT ỨNG DỤNG: ") 
@@ -86,7 +79,7 @@ def install():
 #		os.system('sudo pip3 install -U youtube-dl')
 #	except:
 #		pass
-	pip = ['PySDL2', 'wheel','requests', 'regex', 'pya20','pygame', 'termcolor','pyAesCrypt', 'cffi', 'google-cloud-speech', 'six', 'googletrans' ,'wikipedia' ,'forecastiopy', 'click', 'pyyaml','datetime','bs4','datefinder','pafy','youtube_dl','pyalsaaudio', 'gTTS', 'python-vlc', 'SpeechRecognition','underthesea','numpy','feedparser','mutagen','pyaudio','pulsectl','spotipy','lxml==4.3.1','spotipy','git+https://github.com/plamere/spotipy.git','spidev']
+	pip = ['PySDL2', 'wheel','requests', 'regex', 'pya20','pygame', 'termcolor','pyAesCrypt', 'cffi', 'google-cloud-speech', 'six', 'googletrans' ,'wikipedia' ,'forecastiopy', 'click', 'pyyaml','datetime','bs4','datefinder','pafy','youtube_dl','pyalsaaudio', 'gTTS', 'python-vlc', 'SpeechRecognition','underthesea','numpy','feedparser']
 	i=0
 	print ('SỐ MODULE CẦN CÀI ĐẶT: '+str(len(pip)-1))
 	print ('Có thể có module cần thời gian dài để xây dựng. Xin hãy kiên nhẫn')
@@ -98,7 +91,7 @@ def install():
 		i+=1
 		print ('MODULE '+str(i)+'/'+str(len(pip)-1))
 #		sys.stdout.write ('>>>')
-		b=os.system('sudo pip3 install --quiet -U ' + pip[i])
+		b=os.system('sudo pip3 install --quiet -U -I ' + pip[i])
 		if b==0:
 			pass
 		else:
@@ -137,14 +130,8 @@ def install():
 	with open('/lib/systemd/system/bot.service','a') as file:
 		file.writelines('[Unit]\n')
 		file.writelines('Description=bot\n')
-		file.writelines('After=network.target\n')
-		file.writelines('Timer\n')
-		file.writelines('OnBootSec=240\n')
+		file.writelines('After=multi-user.target\n')
 		file.writelines('[Service]\n')
-		file.writelines('User=pi\n')
-		file.writelines('Group=pi\n')
-		file.writelines('Restart=always\n')
-		file.writelines('RestartSec=10\n')
 		file.writelines('Type=simple\n')
 		file.writelines('WorkingDirectory='+str(path)+'\n')
 		file.writelines('ExecStart=/usr/bin/python3 '+str(path)+'/main.py\n')
@@ -244,13 +231,13 @@ def config_bot():
 #DARSKY	
 	print("")
 	time.sleep(0.7)
-	print(colored("BẠN CÓ MUỐN KIỂM TRA THỜI TIẾT","yellow")+" THÔNG QUA DARSKY")
+	print(colored("BẠN CÓ MUỐN KIỂM TRA THỜI TIẾT","yellow")+" THÔNG QUA DARKSKY")
 	time.sleep(0.5)
 	print("CẤU HÌNH HIỆN TẠI CỦA DARKSKY ĐANG LÀ: "+ colored(gih.get_config('api_darksky'),'red'))
-	darksky=input("BẠN HÃY NHẬP VÀO "+colored("google","yellow")+" API DARSKY HOẶC " + colored("K","yellow")+ " ĐỂ BỎ QUA: ")
+	darksky=input("BẠN HÃY NHẬP VÀO "+ colored("google","yellow")+" API DARKSKY HOẶC " + colored("K","yellow")+ " ĐỂ BỎ QUA: ")
 	if str(darksky) != '':
-		gih.set_config('api_darksky',darksky)
-		print("------>THIẾT LẬP DARKSKY: "+colored(str(darksky),'green'))
+		gih.set_config('api_darksky',str(darksky))
+		print("------>THIẾT LẬP DARKSKY: "+ colored(str(darksky),'green'))
 	elif str(darksky).upper()=='K':
 		print("GIỮ NGUYÊN THIẾT LẬP TTS CÓ SẴN")
 	else:
@@ -284,6 +271,9 @@ def mic_set():
 		except:
 			pass
 		import pulsectl
+	os.system('killall pulseaudio')
+	os.system('sudo killall pulseaudio')
+	os.system('pulseaudio -D')
 	time.sleep(1)
 	pulse = pulsectl.Pulse('my-client')
 	blist = pulse.source_list()
@@ -300,11 +290,11 @@ def mic_set():
 		if 'OmniVision' in blist[i].name:
 			source = blist[i].name
 			print ('------------------->>>MIC ARRAY SONY PS3<<<--------------------------')
-		elif 'mono' in blist[i].name and 'input' in blist[i].name and 'monitor' not in blist[i].name:
+		elif 'mono' in blist[i].name and 'input' in blist[i].name:
 			source = blist[i].name
 			print('------------------------->>>MIC USB<<<-----------------------------')
 		else:
-			source = blist[0].name
+			pass
 		time.sleep(0.7)
 #			print ('KHÔNG RÕ LOẠI MIC BẠN ĐANG SỬ DỤNG HOẶC BẠN QUÊN CHƯA GẮN MIC')
 #		iii = input('NHẬP TÊN MIC BẠN SỬ DỤNG (TỐT NHẤT LÀ BÔI ĐEN ĐOẠN TÊN BÊN TRÊN): ')
@@ -320,29 +310,34 @@ def mic_set():
 		if 'USB' in slist[j].description and 'output' in slist[j].name:
 			sink = slist[j].index
 			print ('ĐẦU RA USB SOUND')
-		elif 'Analog Stereo' in slist[j].description and 'output' in slist[j].name and 'fallback' not in slist[j].name:
+		elif 'Analog Stereo' in slist[j].description and 'output' in slist[j].name:
 			sink = slist[j].index
 			print ('ĐẦU RA 3.5 PI')
 		else:
-			sink = slist[0].index
+			pass
 		print('CÁC ĐẦU RA KHÁC VUI LÒNG QUAN SÁT VÀ CÀI ĐẶT THỦ CÔNG')
 #			sss = input('NHẬP SỐ THỨ TỰ OUTPUT LIST: ')
 #			sink = int(sss)
 		# time.sleep(0.7)
-#	os.system('amixer cset numid=3 1')
+	os.system('amixer cset numid=3 1')
 	print("--->>>XONG")
 	print('')
 	time.sleep(1)
-	if str(source) != '':
+	try:
 		os.system('pacmd set-default-source '+str(source))
-		os.system('pactl set-source-volume 0 80%')
-	if str(sink) != '':
-		os.system('pacmd set-default-sink '+str(sink))
-		os.system('pactl set-sink-volume 0 80%')
+	except Exception as eeeee:
+		print(eeeee)
+		pass
+	os.system('pactl set-source-volume 0 120%')
+	os.system('pacmd set-default-sink '+str(sink))
+	os.system('pactl set-sink-volume 0 80%')
 	print('')
 	print('NẾU MIC KHÔNG HOẠT ĐỘNG HÃY DÙNG LỆNH DƯỚI ĐÂY. LƯU Ý ĐÚNG TÊN MIC')
 	print('')
-	print ('pacmd set-default-source tên_mic, ví dụ: pacmd set-default-source '+str(source))
+	try:
+		print ('pacmd set-default-source tên_mic, ví dụ: pacmd set-default-source '+str(source))
+	except:
+		pass
 	print('')
 	print ('NẾU KHÔNG CÓ ÂM THANH PHÁT RA LOA. HÃY CÀI ĐẶT LẠI OUTPUT VỚI LỆNH: ')
 	print ('pacmd set-default-sink + số_thứ_tự_sinklist, ví dụ:  pacmd set-default-sink ' + str(sink))

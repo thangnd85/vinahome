@@ -27,20 +27,21 @@ Example usage:
 
 # [START speech_transcribe_streaming_mic]
 from __future__ import division
-
+import gih
 import re
 import sys
-import gih
+from google.cloud import speech_v1p1beta1 as speech
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
 import time
+
 # Audio recording parameters
-RATE = 48000
-CHUNK = int(RATE / 30)  # 100ms
-STREAMING_LIMIT=5000
+RATE = 16000
+CHUNK = int(RATE / 10)  # 100ms
+STREAMING_LIMIT=8000
 def get_current_time():
     return int(round(time.time() * 1000))
 

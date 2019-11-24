@@ -8,6 +8,8 @@ signal.signal(signal.SIGINT, execute.signal_handler)
 import dem
 import threading
 import time
-#os.system('pulseaudio --start')
+
+
+
 dem.mainloop()
 

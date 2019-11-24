@@ -1,4 +1,3 @@
-from helper import *
 import requests
 import json
 import sqlite3 as lite
@@ -6,8 +5,6 @@ import os
 import yaml
 import time
 from termcolor import colored
-import pyximport
-pyximport.install(build_dir=”./build”)
 def get_config(request):
 
     stream = open('config.yaml','r')

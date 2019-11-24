@@ -1,12 +1,10 @@
-import pyximport
-pyximport.install(build_dir=”./build”)
 try:
 	from pyA20.gpio import gpio
 	from pyA20.gpio import port
 except:
   
 	pass
-#import begin
+import begin
 from helper import *
 from pygame import mixer
 import dem
@@ -26,30 +24,11 @@ import legal
 import sys
 from time import ctime, strftime
 import spot
-seed = gih.get_config('seed')
-if seed == 1:
-	import apa102
-	from pixels import pixels
-import time
-import threading
-try:
-	import queue as Queue
-except ImportError:
-	import Queue as Queue
-path = os.path.dirname(os.path.abspath('_file_'))
-path = path
-sp_act = gih.get_config('spotify')
-if sp_act == '1':
-	import spot
-s_user = gih.get_config('spotify_username')
-s_id = gih.get_config('spotify_client_id')
-s_secret = gih.get_config('spotify_client_secret')
-if (os.environ['_']) == '/home/pi/env/bin/python3':
-	import textinput
+import pixels
 interrupted = False
-if sp_act == 1:
-	spo=spot.spo(s_user,s_id,s_secret,'http://localhost:9999/')
-	spotipy=spo.assign()
+spo=spot.spo('drlbminh','d6881de9093040d8b9c18d669224b559','8f233b0f5037456b9c5e084f3f069efd','http://localhost:9999/')
+spotipy=spo.assign()
+
 reminder = gih.get_config('reminder')
 ggcre = gih.get_config('google_application_credentials')
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ggcre
@@ -101,7 +80,7 @@ else:
 	print(">>>>>>>>>>> BẠN CẦN LICENSE XIN LIÊN HỆ LBMINH AUTOMATION <<<<<<<<<<<<<<<")
 	print('')
 	ok = 0
-#	trial_times = 0
+	trial_times = 0
 
 
 
@@ -145,13 +124,14 @@ def timlenhtrongdata(data):
 		rows=cur.fetchall()
 		taplenh=[]
 		for row in rows:
-			b = 0
+			
 			for i in range(0,11):
 				if row[i].upper() in data.upper():
 					taplenh.append(row[0])
 					break
 
 	print(taplenh)
+
 
 def timkiemthucthi(data,friendly_name_hass,sta):
 	with con:
@@ -281,12 +261,9 @@ def jarvis(data):
 		timkiemthucthi(data,friendly_name_hass,sta)
 
 def xuly():
-	if seed == 1:
-		pixels.wakeup()
-	mixer.music.load('resources/ding.wav')
-	mixer.music.play()
+	pixels.pixels.wakeup() 
+
 	if ok == 0:
-		trial_times = 0	
 		speaking.speak('đây là bản dùng thử')
 		trial_times +=1
 		if trial_times < 20:
@@ -315,8 +292,8 @@ def xuly():
 		print(colored('EM ĐANG CHỜ RA LỆNH - BẬT TẮT <TÊN THIẾT BỊ> HAY HỎI MẤY GIỜ RỒI... - HÃY ĐỌC VỀ CÁCH GIAO TIẾP VỚI EM TRÊN LBMINHAUTOMATION.COM','green'))
 		conti = 1
 
-		# mixer.music.load('resources/ding.wav')
-		# mixer.music.play()
+		mixer.music.load('resources/ding.wav')
+		mixer.music.play()
 		try:
 			if api_boolean == 1:
 				print('------------------------------------------------------')
@@ -340,8 +317,7 @@ def xuly():
 		
 	mixer.music.load('resources/dong.wav')
 	mixer.music.play()
-	if seed == 1:
-		pixels.think()			   
+	pixels.pixels.think() 
 	if conti == 1 and str(data).upper() != 'ĐƯỢC RỒI':
 		try:
 			jarvis(data)
@@ -377,17 +353,14 @@ def xuly():
 		spotipy.volume(volume)
 	except Exception as e:
 		print('spotify: '+str(e))
-
+	pixels.pixels.off()
 	print(colored('*****************SẴN SÀNG CHỜ GỌI****************','green'))
-	if seed ==1:
-		pixels.off()
 
 speaking.speak('Xin chào, em đang khởi động đây. Xin vui lòng chờ em tí nhé.')
 print('------------------------------------------------------------------------------')
 print('')
 time.sleep(0.3)
 print(colored('[MAIN]: THIẾT LẬP - Home Assistant tại địa chỉ: '+ domain,'yellow'))
-print (os.environ['_'])
 print('')
 time.sleep(0.3)
 t = gih.getinfo(domain,password,con1)
@@ -402,19 +375,22 @@ elif t ==False:
 	if check == False:
 		speaking.speak('Không kết nối được với internet')
 def maintain():
-	if seed ==1:
-		pixels.off()
-	time.sleep(0.1)
+	time.sleep(1)
 	print('[MAIN]')
 	print('')
-#	try:
-#		os.system('sudo chmod -R 0777 '+path)
-#		os.system('sudo chmod -R 0777 '+path+'/hassdata.db')
-#	except:
-#		pass
-	trial_times=0		  
+	try:
+		os.system('sudo chmod -R 0777 /home/pi/lbminh-bot/hassdata.db')
+	except:
+		pass
+
+	try:
+		
+		os.system('sudo chmod -R 0777 /home/pi/lbminh-bot')
+	except:
+
+		pass
+	trial_times=0
 	print(colored('*****************SẴN SÀNG CHỜ GỌI****************','green'))
-	
 	if api_boolean != 1111:
 		detector.start(detected_callback=xuly,interrupt_check=interrupt_callback,sleep_time=0.01)
 		detector.terminate()

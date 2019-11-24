@@ -1,6 +1,7 @@
-from helper import *
-import pyximport
-pyximport.install(build_dir=”./build”)
+import requests
+from bs4 import BeautifulSoup
+import re
+import random
 def truyen():
 	headers = requests.utils.default_headers()
 	headers.update({

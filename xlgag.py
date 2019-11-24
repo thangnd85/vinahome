@@ -1,5 +1,4 @@
-import pyximport
-pyximport.install(build_dir=”./build”)
+
 import sqlite3 as lite
 from fuzzywuzzy import fuzz
 con = lite.connect('data.db',check_same_thread=False)

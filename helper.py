@@ -1,8 +1,8 @@
 try:
-	from pyA20.gpio import gpio
-	from pyA20.gpio import port
+    from pyA20.gpio import gpio
+    from pyA20.gpio import port
 except:
-	pass
+    pass
 #--------------------------
 # CÁC MODULE SẴN CÓ
 import logging
@@ -56,15 +56,18 @@ from gtts import gTTS
 from forecastiopy import *
 from underthesea import pos_tag
 import numpy as np
+import re
+import sys
+import gih
 from google.cloud import speech
+from google.cloud.speech import enums
+from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
 import time
 from mutagen.mp3 import MP3
 from underthesea import sent_tokenize as sent
-import pulsectl
-import pyximport
-pyximport.install(build_dir=”./build”)
+
 #các module tự phát triển
 import gih
 #import news

@@ -2,11 +2,12 @@
 
 # -*- coding: utf-8 -*-
 from helper import *
-apikeyds = gih.get_config('api_darksky')
 
+apikeyds = gih.get_config('api_darksky')
+toado=gih.get_config('toado')
 def darksky_weather():
 	apikey = apikeyds
-	Lisbon = [10, 106]
+	Lisbon = [toado[0], toado[1]]
 
 	fio = ForecastIO.ForecastIO(apikey,
 	                            units=ForecastIO.ForecastIO.UNITS_SI,
@@ -21,12 +22,12 @@ def darksky_currently(fio):
 			if item == 'humidity':
 					hum = str(round(currently.get()[item]*100,1))
 					hum = hum.replace('.',',')
-					humidity= ('Hiện tại Độ ẩm là '+ hum + ' phần trăm. ' )
+					humidity= ('Hiện tại Độ ẩm là'+ ' : '+ hum + ' phần trăm.' )
 #                    humidity = humidity.replace('.',',')
 			elif item == 'temperature':
 					temp = str(round(currently.get()[item],1))
 					temp = temp.replace('.',',')
-					temperature=('Nhiệt độ là '+ temp + ' độ. ' )
+					temperature=('Nhiệt độ là'+ ' : '+ temp + ' độ.' )
 #                    temperature=temperature.replace('.',',')
 			elif item == 'icon':
 					icon = (str(currently.get()[item]))
@@ -71,7 +72,7 @@ def darksky_according_hours(fio,hours):
 				if item == 'humidity':
 					humidity= ('Trong '+ str(hour+1)+ ' giờ tới '+ 'Độ ẩm là'+ ' : '+ str(hourly.get_hour(hour)[item]*100) + ' phần trăm ' )
 				elif item == 'temperature':
-					temperature=('Nhiệt độ là'+ ' : '+ str(hourly.get_hour(hour)[item])  )
+					temperature=('Nhiệt độ là'+ ' : '+ str(hourly.get_hour(hour)[item]) )
 				elif item == 'icon':
 					icon = (str(hourly.get_hour(hour)[item]))
 					if icon == 'rain':

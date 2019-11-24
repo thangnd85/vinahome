@@ -1,4 +1,3 @@
-from helper import *
 from requests.auth import HTTPDigestAuth
 import requests
 import json

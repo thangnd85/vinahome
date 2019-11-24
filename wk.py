@@ -1,4 +1,3 @@
-from helper import *
 import wikipedia
 
 class find_info():
@@ -10,7 +9,6 @@ class find_info():
 		try:
 			wikipedia.set_lang('vi')
 			datarep = wikipedia.summary(self.data, sentences = 2)
-			datarep = sent(datarep)
 			return datarep
 		except:
 			datarep = 'Tìm không ra rồi anh ơi'

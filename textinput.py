@@ -13,18 +13,12 @@
 # limitations under the License.
 
 """Sample that implements a text client for the Google Assistant Service."""
-import concurrent.futures
+
 import os
 import logging
 import json
-import os.path
-import pathlib2 as pathlib
-import sys
-import time
-import uuid	   
 
 import click
-import grpc		   
 import google.auth.transport.grpc
 import google.auth.transport.requests
 import google.oauth2.credentials
@@ -33,34 +27,31 @@ from google.assistant.embedded.v1alpha2 import (
     embedded_assistant_pb2,
     embedded_assistant_pb2_grpc
 )
-from tenacity import retry, stop_after_attempt, retry_if_exception
 
 try:
     from . import (
         assistant_helpers,
-        audio_helpers,
         browser_helpers,
-        device_helpers					  
     )
 except (SystemError, ImportError):
     import assistant_helpers
-    import audio_helpers
     import browser_helpers
-    import device_helpers
 
-
+#import dem
+#import processss
+import speaking
 ASSISTANT_API_ENDPOINT = 'embeddedassistant.googleapis.com'
-END_OF_UTTERANCE = embedded_assistant_pb2.AssistResponse.END_OF_UTTERANCE
-DIALOG_FOLLOW_ON = embedded_assistant_pb2.DialogStateOut.DIALOG_FOLLOW_ON
-CLOSE_MICROPHONE = embedded_assistant_pb2.DialogStateOut.CLOSE_MICROPHONE
-PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
 DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
+PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
+
+api_endpoint = 'embeddedassistant.googleapis.com'
+grpc_deadline = 60 * 3 + 5
+PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
 device_id = 'gapi-7c1b2'
 device_model_id = 'gapi-pias'
 lang = 'en-US'
 display = True
 verbose = True
-api_endpoint = 'embeddedassistant.googleapis.com'
 credentials = os.path.join(click.get_app_dir('google-oauthlib-tool'),
                            'credentials.json')
 with open(credentials, 'r') as f:
@@ -71,7 +62,6 @@ with open(credentials, 'r') as f:
 grpc_channel = google.auth.transport.grpc.secure_authorized_channel(
     credentials, http_request, api_endpoint)
 
-	
 class SampleTextAssistant(object):
     """Sample Assistant that supports text based conversations.
 
@@ -104,7 +94,7 @@ class SampleTextAssistant(object):
 
     def __exit__(self, etype, e, traceback):
         if e:
-            return False
+            return True
 
     def assist(self, text_query):
         """Send a text request to the Assistant and playback the response.
@@ -160,13 +150,13 @@ class SampleTextAssistant(object):
                                    'credentials.json'),
               help='Path to read OAuth2 credentials.')
 @click.option('--device-model-id',
-              default=device_model_id,
+              default='gapi-pias',
               metavar='<device model id>',
               required=True,
               help=(('Unique device model identifier, '
                      'if not specifed, it is read from --device-config')))
 @click.option('--device-id',
-              default=device_id,
+              default='gapi-7c1b2',
               metavar='<device id>',
               required=True,
               help=(('Unique registered device instance identifier, '
@@ -184,43 +174,28 @@ class SampleTextAssistant(object):
 @click.option('--grpc-deadline', default=DEFAULT_GRPC_DEADLINE,
               metavar='<grpc deadline>', show_default=True,
               help='gRPC deadline in seconds')
+			  
 
 def main(api_endpoint, credentials,
          device_model_id, device_id, lang, display, verbose,
-         grpc_deadline, *args, **kwargs):
+         grpc_deadline):
     # Setup logging.
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
     # Load OAuth 2.0 credentials.
-    try:
-        with open(credentials, 'r') as f:
-            credentials = google.oauth2.credentials.Credentials(token=None,
-                                                                **json.load(f))
-            http_request = google.auth.transport.requests.Request()
-            credentials.refresh(http_request)
-    except Exception as e:
-        logging.error('Error loading credentials: %s', e)
-        logging.error('Run google-oauthlib-tool to initialize '
-                      'new OAuth 2.0 credentials.')
-        sys.exit(-1)
 
     # Create an authorized gRPC channel.
-    grpc_channel = google.auth.transport.grpc.secure_authorized_channel(
-        credentials, http_request, api_endpoint)
-    logging.info('Connecting to %s', api_endpoint)
 
     with SampleTextAssistant(lang, device_model_id, device_id, display,
                              grpc_channel, grpc_deadline) as assistant:
 #        while True:
-            query = click.prompt('')
-            click.echo('<you> %s' % query)
+            
+#            query = click.prompt('')
+#            click.echo('<you> %s' % query)
+            query = input()
             response_text, response_html = assistant.assist(text_query=query)
-            if display and response_html:
-                system_browser = browser_helpers.system_browser
-                system_browser.display(response_html)
-            if response_text:
-                click.echo('<@assistant> %s' % response_text)
-            sys.exit(-1)
-
+            print (response_text)
+#            speaking.speak (response_text)
+    return response_text
 if __name__ == '__main__':
     main()

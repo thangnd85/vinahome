@@ -1,6 +1,3 @@
-from helper import *
-import pyximport
-pyximport.install(build_dir=”./build”)
 import json
 import requests
 import threading

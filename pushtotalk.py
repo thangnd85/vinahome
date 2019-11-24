@@ -58,7 +58,7 @@ PLAYING = embedded_assistant_pb2.ScreenOutConfig.PLAYING
 DEFAULT_GRPC_DEADLINE = 60 * 3 + 5
 device_id = 'gapi-7c1b2'
 device_model_id = 'gapi-pias'
-lang = 'vi-VN'
+lang = 'en-US'
 display = True
 verbose = True
 credentials = os.path.join(click.get_app_dir('google-oauthlib-tool'),
@@ -458,19 +458,15 @@ def main(api_endpoint, credentials, project_id,
         # keep recording voice requests using the microphone
         # and playing back assistant response using the speaker.
         # When the once flag is set, don't wait for a trigger. Otherwise, wait.
-#        wait_for_user_trigger = not once
-#        while True:
-#            if wait_for_user_trigger:
-#                click.pause(info='Press Enter to send a new request...')
-#            continue_conversation = assistant.assist()
-#            # wait for user trigger if there is no follow-up turn in
-#            # the conversation.
-#            wait_for_user_trigger = not continue_conversation
-        wait_for_user_trigger = once
+        wait_for_user_trigger = not once
         while True:
             if wait_for_user_trigger:
-                return
-            continue_conversation = assistant.converse()
+                click.pause(info='Press Enter to send a new request...')
+            continue_conversation = assistant.assist()
+            # wait for user trigger if there is no follow-up turn in
+            # the conversation.
+            wait_for_user_trigger = not continue_conversation
+
             # If we only want one conversation, break.
             if once and (not continue_conversation):
                 break

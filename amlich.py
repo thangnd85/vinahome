@@ -85,12 +85,12 @@ def kiemtra_amlich(a, ngay,yy,mm,dd):
     ss = int(ngay_am)
     nam_nhuan = int(str(lunar_date[3]))	
     if ss == 15:
-        speaking.speak(a+" là ngày rằm"+ thang_am1 + 'năm ' + can[vitri_can] + chi[vitri_chi] + nam_am)
+        speaking.speak(a+" là ngày rằm "+ thang_am1 + 'năm ' + can[vitri_can] +' '+ chi[vitri_chi]+' ' + nam_am)
     elif ss == 1:
-        speaking.speak(a+" là ngày mùng một"+ thang_am1 + 'năm ' + can[vitri_can] + chi[vitri_chi] + nam_am)
+        speaking.speak(a+" là ngày mùng một "+ thang_am1 + 'năm ' + can[vitri_can] +' '+ chi[vitri_chi]+ ' ' + nam_am)
     elif ss>1 and ss<15:
         days_left = 15 - ss
-        speaking.speak(a+" là ngày " + ngay_am + thang_am1 + 'năm ' + can[vitri_can] + chi[vitri_chi] + nam_am + "Còn " + str(days_left) + " ngày nữa là đến rằm")
+        speaking.speak(a+" là ngày " + ngay_am +' '+ thang_am1 + ' năm ' + can[vitri_can] +' '+ chi[vitri_chi] +' '+ nam_am + ". Còn " + str(days_left) + " ngày nữa là đến rằm")
     elif ss>15 and ss<30:
         thang_sau = thang_am + 1
         if thang_am < 12:
@@ -119,6 +119,6 @@ def kiemtra_amlich(a, ngay,yy,mm,dd):
         days_left = delta.days
         thang_am = list_thang[thang_am]
         ngay_am =str(lunar_date[0])
-        speaking.speak(a+' là ngày ' + ngay_am + thang_am + 'năm ' + can[vitri_can] + chi[vitri_chi] + nam_am)					  
+        speaking.speak(a+' là ngày ' + ngay_am +' '+ thang_am + ' năm ' + can[vitri_can]+' ' + chi[vitri_chi]+' ' + nam_am)					  
     else:
-        speaking.speak(str(a)+'  là ngày ' + str(ngay_am) + str(thang_am) + 'năm ' + str(can[vitri_can]) + str(chi[vitri_chi]) + str(nam_am))
+        speaking.speak(str(a)+'  là ngày ' + str(ngay_am)+' ' + str(thang_am) + ' năm ' + str(can[vitri_can])+' ' + str(chi[vitri_chi])+ ' ' + str(nam_am))
