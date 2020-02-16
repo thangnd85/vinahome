@@ -2,6 +2,7 @@ from helper import *
 import gih
 import os
 import time
+from pygame import mixer
 seed = gih.get_config('seed')
 if seed == 1:
 	import pixels
@@ -42,13 +43,13 @@ def speak(audioString):
 #Kiểm tra tồn tại file
 				import os.path
 				from os import path
-				me = path.exists('tmp/google/'+text[:100]+'.mp3')
+				me = path.exists('tmp/google/'+text[:150]+'.mp3')
 				if me ==True:
 					if seed == 1:
 						pixels.pixels.speak() 
-					mixer.music.load('tmp/google/'+text[:100]+'.mp3')
+					mixer.music.load('tmp/google/'+text[:150]+'.mp3')
 					mixer.music.play()
-					audio = MP3('tmp/google/'+text[:100]+'.mp3')
+					audio = MP3('tmp/google/'+text[:150]+'.mp3')
 					t = float (audio.info.length)
 					print ('Time delay :'+str(t))
 					time.sleep(t)
@@ -62,17 +63,17 @@ def speak(audioString):
 #				print ('Time delay: '+str(t))
 #				mp3_fp.seek(0)
 #				mixer.init()
-					tts.save('tmp/google/'+text[:100]+'.mp3')
-					time.sleep(1)
+					tts.save('tmp/google/'+text[:150]+'.mp3')
+					time.sleep(3)
 					if seed == 1:
 						pixels.pixels.speak() 
 #				mixer.music.load(mp3_fp)
-					mixer.music.load('tmp/google/'+text[:100]+'.mp3')
+					mixer.music.load('tmp/google/'+text[:150]+'.mp3')
 					mixer.music.play()
 #				mp3_fp.flush()
 #				mp3_fp.seek(0)
 #			mixer.init()
-					audio = MP3('tmp/google/'+text[:100]+'.mp3')
+					audio = MP3('tmp/google/'+text[:150]+'.mp3')
 					t = float (audio.info.length)
 					print ('Time delay :'+str(t))
 					time.sleep(t)				
@@ -96,13 +97,13 @@ def speak(audioString):
 				print ('Nội dung: '+text)
 				import os.path
 				from os import path
-				me = path.exists('tmp/'+text[:100]+'.mp3')
+				me = path.exists('tmp/'+text[:150]+'.mp3')
 				if me ==True:
 					if seed == 1:
 						pixels.pixels.speak() 
-					mixer.music.load('tmp/'+text[:100]+'.mp3')
+					mixer.music.load('tmp/'+text[:150]+'.mp3')
 					mixer.music.play()
-					audio = MP3('tmp/'+text[:100]+'.mp3')
+					audio = MP3('tmp/'+text[:150]+'.mp3')
 					t = float (audio.info.length)
 					print ('Time delay :'+str(t))
 					time.sleep(t)
@@ -117,16 +118,16 @@ def speak(audioString):
 						urltts = datajson
 						print (urltts)
 #						wget.download(urltts,'tmp/'+text+'.mp3')
-						time.sleep(1)
+						time.sleep(3)
 						r = requests.get(urltts)
-						with open('tmp/'+text[:100]+'.mp3', 'wb') as f:
+						with open('tmp/'+text[:150]+'.mp3', 'wb') as f:
 							f.write(r.content)
 							f.close()
 						if seed == 1:	
 							pixels.pixels.speak() 
-						mixer.music.load('tmp/'+text[:100]+'.mp3')
+						mixer.music.load('tmp/'+text[:150]+'.mp3')
 						mixer.music.play()
-						audio = MP3('tmp/'+text[:100]+'.mp3')
+						audio = MP3('tmp/'+text[:150]+'.mp3')
 						t = float (audio.info.length)
 						print ('Time delay :'+str(t))
 						time.sleep(t)
@@ -151,11 +152,11 @@ def speak(audioString):
 				from os import path
 				from pydub import AudioSegment
 				from pydub.playback import play
-				me = path.exists('tmp/vtcc/'+text[:100]+'.wav')
+				me = path.exists('tmp/vtcc/'+text[:150]+'.wav')
 				if me ==True:
 					if seed == 1:
 						pixels.pixels.speak() 
-					sound = AudioSegment.from_wav('tmp/vtcc/'+text[:100]+'.wav')
+					sound = AudioSegment.from_wav('tmp/vtcc/'+text[:150]+'.wav')
 					play(sound)
 #					mixer.music.play()
 #					audio = wav('tmp/vtcc/'+text+'.wav')
@@ -179,16 +180,18 @@ def speak(audioString):
 # Get the response data as a python object.
 					data = response.content
 # generated wav file is ./python-example.wav
-					with open('tmp/vtcc/'+text[:100]+'.wav', "wb") as f:
+					with open('tmp/vtcc/'+text[:150]+'.wav', "wb") as f:
 						f.write(data)
 						f.close()
-					time.sleep(1)
+					time.sleep(3)
 					if seed == 1:	
 						pixels.pixels.speak() 
-					sound = AudioSegment.from_wav('tmp/vtcc/'+text[:100]+'.wav')
+					sound = AudioSegment.from_wav('tmp/vtcc/'+text[:150]+'.wav')
 					play(sound)					
 # TTS Google1
-	if tts_ == 'google':
+	elif tts_ == 'google':
+		from pygame import mixer
+		mixer.init(54000, -16, 1, 4096)
 		from io import BytesIO
 		print('[MAIN] - NÓI')
 		print('')
@@ -209,12 +212,13 @@ def speak(audioString):
 				t = float(t)
 				print ('Time delay: '+str(t))
 				mp3_fp.seek(0)
-#				mixer.init()
-				pixels.pixels.speak() 
+				mixer.init()
+				if seed == 1:
+					pixels.pixels.speak() 
 				mixer.music.load(mp3_fp)
 				mixer.music.play()
 				mp3_fp.flush()
-#				mp3_fp.seek(0)
+				mp3_fp.seek(0)
 #			mixer.init()
 				time.sleep(t)
 			else:
@@ -266,6 +270,18 @@ def speakja(audioString):
 def speakzh(audioString):
 	mixer.init(54000, -16, 1, 4096)
 	tts = gTTS(audioString,lang = 'zh-cn')
+	mp3_fp = BytesIO()
+	tts.write_to_fp(mp3_fp)
+	mp3_fp.seek(0)
+#	mixer.init()
+	if seed == 1:
+		pixels.pixels.speak() 
+	mixer.music.load(mp3_fp)
+	mixer.music.play()
+	mp3_fp.seek(0)
+def speakvn(audioString):
+	mixer.init(54000, -16, 1, 4096)
+	tts = gTTS(audioString,lang = 'vi')
 	mp3_fp = BytesIO()
 	tts.write_to_fp(mp3_fp)
 	mp3_fp.seek(0)

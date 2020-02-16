@@ -23,6 +23,7 @@ import wk
 import spot
 import speech_recognition as sr
 import wether as wt
+from pygame import mixer
 def recordAudio():
 	r = sr.Recognizer()
 	with sr.Microphone() as source:
@@ -94,7 +95,7 @@ def recordVTCC():
 		# l code'
 	}
 	s = requests.Session()
-	cert_path = ('/home/pi/vtcc-cert/wwwvtccai.crt')
+	cert_path = (dirname+'/wwwvtccai.crt')
 	with sr.Microphone() as source:
 		r.adjust_for_ambient_noise(source)
 		audio = r.listen(source)
@@ -485,13 +486,19 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 		onoff.trangthai(sta)
 #Thời tiết		
 	elif row0_in_db=="THỜI TIẾT":
+		import speaking
 		import gih
 		latlong=gih.get_config('toado')
-		x = datetime.datetime.now()
 		import datetime
 		from datetime import timedelta
+		x = datetime.datetime.now()
 		answer('đang kiểm tra thông tin thời tiết', 'để tôi kiểm tra', 'tôi kiểm tra ngay')
-		if 'HIỆN TẠI' or 'BÂY GIỜ' or 'HÔM NAY' in data:
+		if 'NGÀY MAI' in data:
+			y = x+datetime.timedelta(1)
+			day = str(y.day)
+			tt = wt.weekly('latlon',latlong)
+			speaking.speak('Ngày mai '+tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
+		elif 'HÔM NAY' in data:
 			tt = wt.current('latlon',latlong)
 			speaking.speak('Hôm nay '+tt['overal']+', Nhiệt độ là '+str(tt['temp']) +' độ C,  độ ẩm là ' + str(tt['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt['wind']) + ' km/h.')
 		elif 'GIỜ TỚI' in data:
@@ -510,18 +517,13 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 				speaking.speak('Thời tiết lúc ' + str(y.hour) + ngay+ tt[day]["%.1f" %y.hour]['overal']+', Nhiệt độ là '+str(tt[day]["%.1f" %y.hour]['temp']) +' độ C,  độ ẩm là ' + str(tt[day]["%.1f" %y.hour]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]["%.1f" %y.hour]['wind']) + ' km/h.')
 			else:
 				pass
-		elif 'NGÀY MAI' in data:
-			y = x+datetime.timedelta(1)
-			day = str(y.day)
-			tt = wt.weekly('latlon',latlong)
-			speaking.speak('Ngày mai '+tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
-		elif 'TUẦN' in data:
-			for i in range (0,7):
+		elif 'TUẦN' in data.upper():
+			for i in range (1,3):
 				y = x+datetime.timedelta(i)
 				day = str(y.day)
 				tt = wt.weekly('latlon',latlong)
 				speaking.speak('Ngày '+ day + tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
-		elif 'NGÀY TỚI' in data:
+		elif 'NGÀY TỚI' in data.upper():
 			string = data
 			num = [int(s) for s in string.split() if s.isdigit()]
 			if len(num) > 0:
@@ -532,7 +534,7 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 					speaking.speak('Ngày '+ day + tt[day]['overal']+' Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C '+' Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
 		else:
 			tt = wt.current('latlon',latlong)
-			speaking.speak('Hôm nay '+tt['overal']+', Nhiệt độ là '+str(tt['temp']) +' độ C,  độ ẩm là ' + str(tt['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt['wind']) + ' km/h.')			
+			speaking.speak('Xin lỗi, tôi không nghe bạn hỏi thời tiết ngày nào')			
 	else:
 		answer('tôi không hiểu','tôi nghe không rõ',' vui lòng nói lại đi')
 def mainloop():

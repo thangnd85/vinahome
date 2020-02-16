@@ -3,6 +3,7 @@
 import requests
 from requests import get
 import datetime
+from datetime import timedelta
 #from bing_tr import bing_tr as translate
 #from google_tr import google_tr as translate
 from googletrans import Translator
