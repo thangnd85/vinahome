@@ -1,4 +1,5 @@
-from helper import *
+#from . import *
+import speaking
 def check(data):
 	diaphuong = ['NAM','TRUNG','MIỀN BẮC','AN GIANG','BÌNH DƯƠNG','BÌNH ĐỊNH','BẠC LIÊU','BÌNH PHƯỚC','BẾN TRE','BÌNH THUẬN','CÀ MAU','CẦN THƠ','ĐẮC LẮC','ĐỒNG NAI','ĐÀ NẴNG','ĐẮC NÔNG','ĐỒNG THÁP','GIA LAI','THÀNH PHỐ','HẬU GIANG','KIÊN GIANG','KHÁNH HÒA','KON TUM','LONG AN','LÂM ĐỒNG','NINH THUẬN','PHÚ YÊN','QUẢNG BÌNH','QUẢNG NGÃI','QUẢNG NAM','QUẢNG TRỊ','SÓC TRĂNG','TIỀN GIANG','TÂY NINH','HUẾ','TRÀ VINH','VĨNH LONG','VŨNG TÀU']
 	diaphuong_=np.array(diaphuong)

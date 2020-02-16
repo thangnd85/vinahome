@@ -11,7 +11,7 @@ from ctypes import *
 from contextlib import contextmanager
 
 logging.basicConfig()
-logger = logging.getLogger("-----LBMINH----->>>")
+logger = logging.getLogger("----VINAHOME---")
 logger.setLevel(logging.INFO)
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -95,8 +95,8 @@ class HotwordDetector(object):
     def __init__(self, decoder_model,
                  resource=RESOURCE_FILE,
                  sensitivity=[],
-                 audio_gain=1,
-                 apply_frontend=True):
+                 audio_gain=0.9,
+                 apply_frontend=False):
 
         tm = type(decoder_model)
         ts = type(sensitivity)

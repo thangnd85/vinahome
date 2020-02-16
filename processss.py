@@ -4,8 +4,8 @@ try:
 except:
   
 	pass
-import begin
-from helper import *
+#import begin
+#from helper import *
 from pygame import mixer
 import dem
 import chsv
@@ -25,6 +25,7 @@ import sys
 from time import ctime, strftime
 import spot
 import pixels
+import requests
 interrupted = False
 spo=spot.spo('drlbminh','d6881de9093040d8b9c18d669224b559','8f233b0f5037456b9c5e084f3f069efd','http://localhost:9999/')
 spotipy=spo.assign()
@@ -62,7 +63,7 @@ except:
 serial_pi = gser.getserial()
 serial_dangky = legal.check_legal()
 print(colored('[CHECK SERIAL] - Kiểm tra Serial','red'))
-time.sleep(0.2)
+time.sleep(0.1)
 
 print('Serial Pi: '+ serial_pi)
 if serial_pi == serial_dangky:
@@ -148,7 +149,7 @@ def timkiemthucthi(data,friendly_name_hass,sta):
 			if b==1:
 				break   
 		if b==0:
-			speaking.speak('xin lỗi, em không hiểu')
+			speaking.speak('xin lỗi, tôi không hiểu')
 	
 def find_hass_friendly_name(data):
 	print('[MAIN] - KIỂM TRA TÊN THIẾT BỊ')
@@ -204,6 +205,7 @@ def execute_command(data,rows_command,domain,password):
 	print('[MAIN] - THỰC THI CUSTOM COMMAND')
 	print('')
 	try:
+		import json
 		for row in rows_command:
 			if row[0].upper().strip() in data.upper().strip():
 				
@@ -225,7 +227,7 @@ def execute_command(data,rows_command,domain,password):
 				
 				if str(r)=='<Response [200]>':
 					print('[DEBUG] Thực thi Custom Command: ok')
-					answer('ok','có ngay','đã xong')
+					dem.answer('ok','có ngay','đã xong')
 					r = 1
 					return r
 				else:
@@ -264,6 +266,7 @@ def xuly():
 	pixels.pixels.wakeup() 
 
 	if ok == 0:
+		trial_times=0
 		speaking.speak('đây là bản dùng thử')
 		trial_times +=1
 		if trial_times < 20:
@@ -289,18 +292,20 @@ def xuly():
 		pass
 	data ='interruptinterrupt'
 	while data =='interruptinterrupt':
-		print(colored('EM ĐANG CHỜ RA LỆNH - BẬT TẮT <TÊN THIẾT BỊ> HAY HỎI MẤY GIỜ RỒI... - HÃY ĐỌC VỀ CÁCH GIAO TIẾP VỚI EM TRÊN LBMINHAUTOMATION.COM','green'))
+		print(colored('tôi ĐANG CHỜ RA LỆNH - BẬT TẮT <TÊN THIẾT BỊ> HAY HỎI MẤY GIỜ RỒI...','green'))
 		conti = 1
 
 		mixer.music.load('resources/ding.wav')
 		mixer.music.play()
 		try:
+#	Dùng API Google
 			if api_boolean == 1:
 				print('------------------------------------------------------')
-				print(colored('-------------------------CÓ DÙNG API-----------------------','green'))
+				print(colored('-------------------------CÓ DÙNG API GOOGLE-----------------','green'))
 				print('------------------------------------------------------')
 				data = tsm.main()
 				conti = 1
+#	Không dùng API Google
 			elif api_boolean == 0:
 				print('------------------------------------------------------')
 				print(colored('---------------KHÔNG DÙNG API, SẼ NHẬN CHẬM LẮM ĐÂY, MÔI TRƯỜNG ÍT ỒN SẼ DỄ NHẬN HƠN (TRÁNH QUẠT, MÁY LẠNH)-------------','red'))
@@ -309,6 +314,25 @@ def xuly():
 				conti = 1
 				if hotword.upper() in str(data).upper():
 					data == 'interruptinterrupt'
+#	Dùng API FPT
+			elif api_boolean == 2:
+				print('------------------------------------------------------')
+				print(colored('---------------DÙNG API FPT-------------','yellow'))
+				print('------------------------------------------------------')
+				data=dem.recordFPT()
+				conti = 1
+				if hotword.upper() in str(data).upper():
+					data == 'interruptinterrupt'
+#	Dùng API VTCC
+			elif api_boolean == 3:
+				print('------------------------------------------------------')
+				print(colored('---------------DÙNG API VIETTEL-------------','blue'))
+				print('------------------------------------------------------')
+				data=dem.recordVTCC()
+				conti = 1
+				if hotword.upper() in str(data).upper():
+					data == 'interruptinterrupt'
+#	Sử dụng text input
 			elif api_boolean == 1111:
 				data=input("Nhập lệnh cần thực thi:  ")
 		except:
@@ -335,9 +359,9 @@ def xuly():
 	try:
 		player_volume=dem.radio.lay_am_luong()
 		dem.player.audio_set_volume(player_volume - 35)
-		time.sleep(0.7)
+		time.sleep(0.1)
 		dem.player.audio_set_volume(player_volume - 20)
-		time.sleep(0.7)
+		time.sleep(0.1)
 		dem.player.audio_set_volume(player_volume)
 		
 	except:
@@ -347,26 +371,26 @@ def xuly():
 		# volume=volume[2]
 		print('volume sau khi giam: ' + str(volume))
 		spotipy.volume(volume-35)
-		time.sleep(0.7)
+		time.sleep(0.1)
 		spotipy.volume(volume-20)
-		time.sleep(0.7)
+		time.sleep(0.1)
 		spotipy.volume(volume)
 	except Exception as e:
 		print('spotify: '+str(e))
 	pixels.pixels.off()
 	print(colored('*****************SẴN SÀNG CHỜ GỌI****************','green'))
 
-speaking.speak('Xin chào, em đang khởi động đây. Xin vui lòng chờ em tí nhé.')
+speaking.speak('Xin chào, tôi là Jarvis, trợ lý ảo cho ngôi nhà thông minh.')
 print('------------------------------------------------------------------------------')
 print('')
-time.sleep(0.3)
+time.sleep(0.1)
 print(colored('[MAIN]: THIẾT LẬP - Home Assistant tại địa chỉ: '+ domain,'yellow'))
 print('')
-time.sleep(0.3)
+time.sleep(0.1)
 t = gih.getinfo(domain,password,con1)
 
 if t==True:
-	speaking.speak('Kết nối thành công với trung tâm điều khiển Home Assistant')
+	speaking.speak('Kết nối thành công với trung tâm điều khiển nhà. Sẵn sàng chờ lệnh của bạn.')
 	
 elif t ==False:
 	speaking.speak("không kết nối được với trung tâm điều khiển Home Assistant")
@@ -375,20 +399,9 @@ elif t ==False:
 	if check == False:
 		speaking.speak('Không kết nối được với internet')
 def maintain():
-	time.sleep(1)
+	time.sleep(0.1)
 	print('[MAIN]')
 	print('')
-	try:
-		os.system('sudo chmod -R 0777 /home/pi/lbminh-bot/hassdata.db')
-	except:
-		pass
-
-	try:
-		
-		os.system('sudo chmod -R 0777 /home/pi/lbminh-bot')
-	except:
-
-		pass
 	trial_times=0
 	print(colored('*****************SẴN SÀNG CHỜ GỌI****************','green'))
 	if api_boolean != 1111:

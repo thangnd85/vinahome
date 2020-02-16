@@ -88,8 +88,8 @@ def ngayle_check(data):
     else:
         pass
     dayleft = d.days
-
-    if int(dayleft) > 30:
+#	b = []
+    if int(dayleft) > 29 :
         b =['Bạn mong chờ ngày '+a+' quá đấy! Còn lâu mà. ','Đùa nhau à '+a+'qua rồi mà. ','Sắp rồi, vài ngày nữa thôi. ']
     elif int(dayleft) < 30:
         b = ['Sắp đến '+a+' rồi.','Hình như ngày mai, à không phải. ','Rồi rồi, sắp được nghỉ rồi. ','Ráng chờ đi, còn vài ngày nữa nhé. ']

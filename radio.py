@@ -1,4 +1,3 @@
-
 import alsaaudio
 import vlc
 import threading
@@ -13,8 +12,6 @@ import time
 import execute
 import gih
 conciu = lite.connect('data.db',check_same_thread=False)
-
-
 def play_nhac(data,friendly_name_hass):
     print('Vào chương trình phát nhạc')
     p = 0

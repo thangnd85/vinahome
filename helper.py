@@ -67,7 +67,8 @@ from six.moves import queue
 import time
 from mutagen.mp3 import MP3
 from underthesea import sent_tokenize as sent
-
+import wave
+import playsound
 #các module tự phát triển
 import gih
 #import news

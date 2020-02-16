@@ -54,23 +54,17 @@ print('')
 #			sink = int(sss)
 	# time.sleep(0.7)
 time.sleep(0.7)
-os.system('amixer cset numid=3 1')
+#os.system('amixer cset numid=3 1')
 
 print(colored('--->>>XONG','green'))
 #time.sleep(0.7)
 print(colored('THIẾT LẬP ÂM LƯỢNG MỨC 80%','green'))
 #time.sleep(0.7)
-os.system("amixer sset 'Master' 80%")
+#os.system("amixer sset 'Master' 80%")
 #time.sleep(0.7)
 print(colored('--->>>XONG','green'))
 print('')
 #time.sleep(1)
-try:
-	os.system('pacmd set-default-source '+str(source))
-except Exception as e:
-	print(e)
-	pass
-
 print('')
 #time.sleep(1)
 print(colored('BẮT ĐẦU KHỞI ĐỘNG BOT...','green'))

@@ -16,17 +16,18 @@ print("[SETUP] - KHỞI ĐỘNG BỘ CÀI ĐẶT")
 print('-------------------------------------------------------------------')
 print ('BẮT ĐẦU CÀI ĐẶT ........')
 
-
-def install():
+def install_package():
 	os.system('sudo apt-get -y -qq install curl apt-transport-https >> /dev/null')
 	os.system('sudo curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -')
 	os.system("echo 'deb https://dtcooper.github.io/raspotify raspotify main' | sudo tee /etc/apt/sources.list.d/raspotify.list")
 	c=[]
 	d=[]
-	a=['sox',
+	a=['',
+	'sox',
 	'libsdl-mixer1.2',
 	'swig',
 	'libatlas-base-dev',
+	'python3-alsaaudio',
 	'python3-pyaudio',
 	'vlc',
 	'python3-setuptools',
@@ -42,6 +43,7 @@ def install():
 	'libavformat-dev', 
 	'libswscale-dev', 
 	'python3-dev', 
+	'pypy3-dev', 
 	'python3-numpy', 
 	'python3-cffi', 
 	'libffi-dev',
@@ -59,8 +61,10 @@ def install():
 	'libportaudio2',
 	'libportaudiocpp0',
 	'portaudio19-dev',
-	'raspotify',
-	'python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose']
+	'python3-vlc',
+	'cython3',
+	'python3-scipy',
+	'raspotify']
 	print('')
 
 	time.sleep(1)
@@ -73,18 +77,18 @@ def install():
 	up=os.system('sudo apt-get update >> /dev/null')
 	if up==0 or up==1:
 #		print('ĐANG GỠ BỎ PYTHON2 RA KHỎI HỆ THỐNG')
-#		os.system('sudo apt-get remove  --purge -y -qq python >> /dev/null')
+#		os.system('sudo apt-get remove  --purge -y -qq python3 >> /dev/null')
 #		print('CÀI ĐẶT LẠI PULSEAUDIO: ')
 #		os.system('sudo apt-get remove --purge -y -qq pulseaudio >>/dev/null')
 		print('ĐANG NÂNG CẤP HỆ THỐNG. VUI LÒNG PHA THÊM SỮA  .....')
 		os.system('sudo apt-get -y -qq upgrade  >> /dev/null')
 
 		print('ĐANG CÀI ĐẶT CÁC ỨNG DỤNG CẦN THIẾT. HÃY KIÊN NHẪN ....')
-		print('Tổng số ứng dụng: '+str(len(a)-1))
+		print('Tổng số ứng dụng: '+str(len(a)))
 	print ("ĐANG CÀI ĐẶT ỨNG DỤNG: ") 
-	while i <len(a)-1:
+	while i < len(a)-1:
 		i+=1
-		print('ĐANG CÀI '+str(i)+'/'+str(len(a)-1))
+		print('ĐANG CÀI '+str(i)+'/'+str(len(a))+': '+str(a[i]))
 #		sys.stdout.write(">>>")
 		b=os.system('sudo apt-get -y -qq install ' + a[i] +'>>/dev/null')
 		if b==0:
@@ -101,20 +105,25 @@ def install():
 		print('-------------------------------------------------------------------')
 		print('[CÀI ĐẶT BƯỚC 1]: OK')
 		print('-------------------------------------------------------------------')
-	
+		
+def install_modules():	
 	print ('-----------------ĐANG NÂNG CẤP PYTHON3 EASY INSTALL----------------------------')
-	os.system('env/bin/python -m pip install --default-timeout=1000 --upgrade --quiet -I pip')
+	if not os.path.exists('./venv'):
+		os.system('pypy3 -m venv venv')
+	os.system('. venv/bin/activate')
+#	os.system('venv/bin/python -m pip install --default-timeout=1000 --upgrade --quiet -I pip')
 
 	time.sleep(1)
-	os.system('pip config --user set global.progress_bar off')
-	os.system('sudo rm '+path+'/env/bin/python3')
-	os.system('sudo rm '+path+'/env/bin/activate.fish')
-	os.system('sudo rm '+path+'/env/bin/activate.csh')
-	os.system('sudo chmod 777 -R env')
-	os.system('python3 -m venv env')
+	os.system('venv/bin/python -m pip config --user set global.progress_bar off')
+#	os.system('sudo rm '+path+'/venv/bin/python3')
+#	os.system('sudo rm '+path+'/venv/bin/activate.fish')
+#	os.system('sudo rm '+path+'/venv/bin/activate.csh')
+#	os.system('sudo chmod 777 -R venv')
+
 #	time.sleep(5)
-	os.system('. env/bin/activate')
-	pip = ['PySDL2', 
+
+	pip = ['',
+	'PySDL2', 
 	'wheel',
 	'requests', 
 	'regex', 
@@ -137,12 +146,13 @@ def install():
 	'youtube_dl',
 	'pyalsaaudio', 
 	'gTTS', 
-	'python-vlc', 
+#	'vlc', 
 	'SpeechRecognition',
-	'underthesea',
 	'numpy',
+#	'scipy==1.3.1',
+	'underthesea',
 	'feedparser',
-	'lxml==4.3.1',
+	'lxml',
 	'mutagen',
 	'pyaudio',
 	'pulsectl',
@@ -154,10 +164,9 @@ def install():
 	'spidev',
 	'git+https://github.com/plamere/spotipy.git --upgrade',
 	'fuzzywuzzy',
-	'python-Levenshtein',
-	'wget playsound pydub']
+	'python-Levenshtein']
 	i=0
-	print ('SỐ MODULE CẦN CÀI ĐẶT: '+str(len(pip)-1))
+	print ('SỐ MODULE CẦN CÀI ĐẶT: '+str(len(pip)))
 	print ('Có thể có module cần thời gian dài để xây dựng. Xin hãy kiên nhẫn')
 #	up=os.system('sudo apt-get update')
 #	if up==0 or up==1:
@@ -166,9 +175,10 @@ def install():
 	print('ĐANG CÀI ĐẶT MODULE')
 	while i <len(pip)-1:
 		i+=1
-		print ('MODULE '+str(i)+'/'+str(len(pip)-1))
-#		sys.stdout.write ('>>>')
-		b=os.system('env/bin/python -m pip install --upgrade --no-cache-dir --default-timeout=1000 --quiet ' + pip[i])
+		print ('MODULE '+str(i)+'/'+str(len(pip)) + ': '+str(pip[i]))
+#		sys.stdout.write ('>>>')--quiet 
+#		b=os.system('venv/bin/python -m pip install --no-cache-dir --default-timeout=10 ' + pip[i])
+		b=os.system('pip3 install --default-timeout=10 ' + pip[i])
 		if b==0:
 			pass
 		else:
@@ -492,13 +502,21 @@ except:
 	print('chmod ee')
 print("CHƯƠNG TRÌNH CÀI ĐẶT BAO GỒM 3 PHẦN: ")
 print("1/ CÀI ĐẶT GÓI  ")
-print("2/ CẤU HÌNH MICROPHONE VÀ LOA ")
-print("3/ HỖ TRỢ CẤU HÌNH BOT")
+print("2/ CÀI ĐẶT MODULES  ")
+print("3/ CẤU HÌNH MICROPHONE VÀ LOA ")
+print("4/ HỖ TRỢ CẤU HÌNH BOT")
 print('--------------------------------------------------------------------')
 time.sleep(0.7)
 a=input('Bạn có muốn chạy PHẦN 1 - CÀI ĐẶT GÓI không? - Xin trả lời (Y/N): ')
 if str(a).upper() == 'Y':
-	install()
+	install_package()
+else:
+	time.sleep(0.7)
+	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
+	time.sleep(0.7)
+az=input('Bạn có muốn chạy PHẦN 1 - CÀI ĐẶT MODULES không? - Xin trả lời (Y/N): ')
+if str(az).upper() == 'Y':
+	install_modules()
 else:
 	time.sleep(0.7)
 	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')

@@ -11,7 +11,7 @@ ext_modules = [
     Extension("gih",["gih.py"]),
     Extension("helper",["helper.py"]),
     Extension("legal",["legal.py"]),
-    Extension("loto",["loto.py"]),
+#    Extension("loto",["loto.py"]),
     Extension("lun",["lun.py"]),
 #    Extension("news",["news.py"]),
     Extension("ngayle",["ngayle.py"]),

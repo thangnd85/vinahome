@@ -22,12 +22,12 @@ def darksky_currently(fio):
 			if item == 'humidity':
 					hum = str(round(currently.get()[item]*100,1))
 					hum = hum.replace('.',',')
-					humidity= ('Hiện tại Độ ẩm là'+ ' : '+ hum + ' phần trăm.' )
+					humidity= ('Hiện tại Độ ẩm là: '+ hum + ' phần trăm, ')
 #                    humidity = humidity.replace('.',',')
 			elif item == 'temperature':
 					temp = str(round(currently.get()[item],1))
 					temp = temp.replace('.',',')
-					temperature=('Nhiệt độ là'+ ' : '+ temp + ' độ.' )
+					temperature=('Nhiệt độ là: '+ temp + ' độ.')
 #                    temperature=temperature.replace('.',',')
 			elif item == 'icon':
 					icon = (str(currently.get()[item]))

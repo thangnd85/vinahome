@@ -91,9 +91,9 @@ def kiemtra_amlich(a, ngay,yy,mm,dd):
     elif ss>1 and ss<15:
         days_left = 15 - ss
         speaking.speak(a+" là ngày " + ngay_am +' '+ thang_am1 + ' năm ' + can[vitri_can] +' '+ chi[vitri_chi] +' '+ nam_am + ". Còn " + str(days_left) + " ngày nữa là đến rằm")
-    elif ss>15 and ss<30:
+    elif ss>15 and ss<31:
         thang_sau = thang_am + 1
-        if thang_am < 12:
+        if thang_am <= 12:
             nam_a = nam_am 
         else:
             nam_a = nam_am + 1

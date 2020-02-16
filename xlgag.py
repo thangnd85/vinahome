@@ -1,6 +1,7 @@
 
 import sqlite3 as lite
 from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 con = lite.connect('data.db',check_same_thread=False)
 def hamcat_control(data):
 
@@ -29,7 +30,7 @@ def xu_ly_gan_giong(data):
     data=hamcat_control(data)
     entity_name=data.strip()
     print(entity_name)
-    a=fuzz.ratio(entity_name,'ĐÀN BÀ')
+    a=fuzz.ratio(entity_name,'ĐÈN PHÒNG KHÁCH')
     print(a)
     return entity_name
 
