@@ -17,52 +17,14 @@ print('-------------------------------------------------------------------')
 print ('BẮT ĐẦU CÀI ĐẶT ........')
 
 
-def install():
+def install_app():
 	os.system('sudo apt-get -y -qq install curl apt-transport-https >> /dev/null')
 	os.system('sudo curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -')
 	os.system("echo 'deb https://dtcooper.github.io/raspotify raspotify main' | sudo tee /etc/apt/sources.list.d/raspotify.list")
 	c=[]
 	d=[]
-	a=['sox',
-	'libsdl-mixer1.2',
-	'swig',
-	'libatlas-base-dev',
-	'python3-pyaudio',
-	'vlc',
-	'python3-setuptools',
-	'build-essential', 
-	'libsdl1.2-dev', 
-	'libfreetype6-dev', 
-	'libsdl-dev', 
-	'libsdl-image1.2-dev', 
-	'libsdl-mixer1.2-dev', 
-	'libsdl-ttf2.0-dev', 
-	'libsmpeg-dev', 
-	'libportmidi-dev', 
-	'libavformat-dev', 
-	'libswscale-dev', 
-	'python3-dev', 
-	'python3-numpy', 
-	'python3-cffi', 
-	'libffi-dev',
-	'libcurl4-openssl-dev',
-	'libssl1.0-dev',
-	'libsoup2.4-dev',
-	'libgcrypt20-dev',
-	'libgstreamer-plugins-bad1.0-dev',
-	'gstreamer1.0-plugins-good',
-	'libasound2-dev', 
-	'flac',
-	'curl',
-	'apt-transport-https',
-	'libportaudio0',
-	'libportaudio2',
-	'libportaudiocpp0',
-	'portaudio19-dev',
-	'raspotify',
-	'python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose']
+	a=['sox','libsdl-mixer1.2','swig','libatlas-base-dev','python3-pyaudio','vlc','python3-setuptools','build-essential', 'libsdl1.2-dev', 'libfreetype6-dev', 'libsdl-dev', 'libsdl-image1.2-dev', 'libsdl-mixer1.2-dev', 'libsdl-ttf2.0-dev', 'libsmpeg-dev', 'libportmidi-dev', 'libavformat-dev', 'libswscale-dev', 'python3-dev', 'python3-numpy', 'python3-cffi','python3-scipy', 'python-matplotlib', 'ipython', 'python-pandas', 'python-sympy', 'python-nose','libffi-dev','libcurl4-openssl-dev','libssl1.0-dev','libsoup2.4-dev','git','libgcrypt20-dev','libgstreamer-plugins-bad1.0-dev','gstreamer1.0-plugins-good','libasound2-dev', 'flac','curl','apt-transport-https','libportaudio0','libportaudio2','libportaudiocpp0','portaudio19-dev','raspotify','python3-pip','python3-venv','ffmpeg','pulseaudio','pavucontrol']
 	print('')
-
 	time.sleep(1)
 	print('[SETUP] - TRONG QUÁ TRÌNH CÀI ĐẶT VUI LÒNG TRẢ LỜI CÁC YÊU CẦU Y/N: ')
 	print('')
@@ -101,7 +63,8 @@ def install():
 		print('-------------------------------------------------------------------')
 		print('[CÀI ĐẶT BƯỚC 1]: OK')
 		print('-------------------------------------------------------------------')
-	
+		
+def install_pip():	
 	print ('-----------------ĐANG NÂNG CẤP PYTHON3 EASY INSTALL----------------------------')
 	os.system('env/bin/python -m pip install --default-timeout=1000 --upgrade --quiet -I pip')
 
@@ -114,57 +77,15 @@ def install():
 	os.system('python3 -m venv env')
 #	time.sleep(5)
 	os.system('. env/bin/activate')
-	pip = ['PySDL2', 
-	'wheel',
-	'requests', 
-	'regex', 
-	'pya20',
-	'pygame', 
-	'termcolor',
-	'pyAesCrypt', 
-	'cffi', 
-	'google-cloud-speech', 
-	'six', 
-	'googletrans' ,
-	'wikipedia' ,
-	'forecastiopy', 
-	'click', 
-	'pyyaml',
-	'datetime',
-	'bs4',
-	'datefinder',
-	'pafy',
-	'youtube_dl',
-	'pyalsaaudio', 
-	'gTTS', 
-	'python-vlc', 
-	'SpeechRecognition',
-	'underthesea',
-	'numpy',
-	'feedparser',
-	'lxml==4.3.1',
-	'mutagen',
-	'pyaudio',
-	'pulsectl',
-	'spotipy',
-	'google-assistant-library',
-	'google-assistant-sdk[samples]',
-	'google-auth-oauthlib[tool]',
-	'google-assistant-grpc',
-	'spidev',
-	'git+https://github.com/plamere/spotipy.git --upgrade',
-	'fuzzywuzzy',
-	'python-Levenshtein',
-	'wget playsound pydub']
+	pip = ['PySDL2', 'wheel','requests', 'regex', 'pya20','pygame', 'termcolor','pyAesCrypt', 'cffi', 'google-cloud-speech', 'six', 'googletrans' ,'wikipedia' ,'forecastiopy', 'click', 'pyyaml','datetime','bs4','datefinder','pafy','youtube_dl','pyalsaaudio', 'gTTS', 'python-vlc', 'SpeechRecognition','underthesea','numpy','feedparser','lxml','mutagen','pyaudio','pulsectl','google-assistant-library','google-assistant-sdk[samples]','google-auth-oauthlib[tool]','google-assistant-grpc','spidev','spotipy','git+https://github.com/plamere/spotipy.git --upgrade','fuzzywuzzy','python-Levenshtein','playsound','wget','pydub','pulsemixer']
 	i=0
-	print ('SỐ MODULE CẦN CÀI ĐẶT: '+str(len(pip)-1))
+	print ('SỐ MODULE CẦN CÀI ĐẶT: '+str(len(pip)))
 	print ('Có thể có module cần thời gian dài để xây dựng. Xin hãy kiên nhẫn')
 #	up=os.system('sudo apt-get update')
 #	if up==0 or up==1:
 #		os.system('sudo apt-get upgrade')
-
 	print('ĐANG CÀI ĐẶT MODULE')
-	while i <len(pip)-1:
+	while i <len(pip):
 		i+=1
 		print ('MODULE '+str(i)+'/'+str(len(pip)-1))
 #		sys.stdout.write ('>>>')
@@ -185,6 +106,7 @@ def install():
 		print('[CÀI ĐẶT BƯỚC 2]: OK')
 	print('------------------------------------------------------------------------------------------')
 	time.sleep(1)
+def build_snowboy():	
 	os.system('rm '+ path+'/swig/Python3/_snowboydetect.so') 
 	os.system('rm '+ path+'/swig/Python3/snowboy-detect-swig.cc')
 	os.system('rm '+ path+'/swig/Python3/snowboy-detect-swig.o') 
@@ -221,39 +143,11 @@ def install():
 	time.sleep(1)	
 	os.system('sudo touch /lib/systemd/system/bot.service')
 	time.sleep(1)
-	os.system('sudo chmod -R 0777 /lib/systemd/system/bot.service')
-	with open('/lib/systemd/system/bot.service','a') as file:
-		file.writelines('[Unit]\n')
-		file.writelines('Description=bot\n')
-		file.writelines('After=network.target\n')
-		file.writelines('[Service]\n')
-		file.writelines('User=bot\n')
-		file.writelines('Group=bot\n')
-		file.writelines('Restart=always\n')
-		file.writelines('RestartSec=10\n')
-		file.writelines('Type=simple\n')
-		file.writelines('WorkingDirectory='+str(path)+'\n')
-		file.writelines('ExecStart=/bin/bash '+str(path)+'/bot.sh\n')
-		file.writelines('[Install]\n')
-		file.writelines('WantedBy=multi-user.target\n')
-		
-#	os.system('sudo touch /lib/systemd/system/bot.timer')
-#	time.sleep(1)
-#	os.system('sudo rm /lib/systemd/system/bot.timer')
-#	time.sleep(1)	
-#	os.system('sudo touch /lib/systemd/system/bot.timer')
-#	time.sleep(1)
-#	os.system('sudo chmod -R 0777 /lib/systemd/system/bot.timer')
-#	with open('/lib/systemd/system/bot.timer','b') as file:
-#		file.writelines('[Unit]\n')
-#		file.writelines('Description=bot timer\n')
-#		file.writelines('After=network.target\n')
-#		file.writelines('[Timer]\n')
-#		file.writelines('OnBootSec=200\n')
-#		file.writelines('Unit=bot.service\n')
-#		file.writelines('[Install]\n')
-#		file.writelines('WantedBy=multi-user.target\n')
-	os.system('sudo systemctl daemon-reload')
+	os.system('mkdir ~/.config')
+	os.system('mkdir ~/.config/systemd')
+	os.system('mkdir ~/.config/systemd/user')
+	os.system('cp bot.service ~/.config/systemd/user/bot.service')
+	os.system('systemctl --user daemon-reload')
 	os.system('sudo usermod -aG pulse-access pi')
 	time.sleep(1)
 #	os.system('sudo systemctl enable bot.timer')
@@ -490,19 +384,36 @@ try:
 	os.system('sudo chmod -R 0777 '+path)
 except:
 	print('chmod ee')
-print("CHƯƠNG TRÌNH CÀI ĐẶT BAO GỒM 3 PHẦN: ")
-print("1/ CÀI ĐẶT GÓI  ")
-print("2/ CẤU HÌNH MICROPHONE VÀ LOA ")
-print("3/ HỖ TRỢ CẤU HÌNH BOT")
+print("CHƯƠNG TRÌNH CÀI ĐẶT BAO GỒM 4 PHẦN: ")
+print("1/ CÀI ĐẶT APT  ")
+print("2/ CÀI ĐẶT PACKAGE  ")
+print("3/ CẤU HÌNH MICROPHONE VÀ LOA ")
+print("4/ HỖ TRỢ CẤU HÌNH BOT")
 print('--------------------------------------------------------------------')
 time.sleep(0.7)
 a=input('Bạn có muốn chạy PHẦN 1 - CÀI ĐẶT GÓI không? - Xin trả lời (Y/N): ')
 if str(a).upper() == 'Y':
-	install()
+	install_app()
 else:
 	time.sleep(0.7)
 	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
 	time.sleep(0.7)
+time.sleep(0.7)
+az=input('Bạn có muốn chạy PHẦN 2 - CÀI ĐẶT GÓI không? - Xin trả lời (Y/N): ')
+if str(az).upper() == 'Y':
+	install_pip()
+else:
+	time.sleep(0.7)
+	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
+	time.sleep(0.7)
+azz=input('Bạn có muốn chạy PHẦN 2 - BUILD SNOWBOY VÀ SERVICE? - Xin trả lời (Y/N): ')
+if str(azz).upper() == 'Y':
+	build_snowboy()
+else:
+	time.sleep(0.7)
+	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
+	time.sleep(0.7)
+
 b=input('Bạn có muốn chạy PHẦN 2 - CẤU HÌNH MICROPHONE VÀ LOA không? - Xin trả lời (Y/N): ')
 time.sleep(0.7)
 if str(b).upper() == 'Y':

@@ -278,6 +278,68 @@ class script():
     def domain_extract(self):
         rr='script'
         return rr
+class scene():
+    def __init__(self,entity_id_ex=[],domain='',password=''):
+        self.entity_id_ex = entity_id_ex
+        self.domain = domain
+        self.password = password
+    def turn_on(self):
+        if version == 'right':
+            url = self.domain+'/api/services/scene/turn_on'
+            headers = {
+    'Authorization': 'Bearer '+ self.password,
+    'content-type': 'application/json',
+}
+        else:
+            url = self.domain + '/api/services/scene/turn_on?api_password='+ self.password
+            headers = {'content-type': 'application/json'}
+        payload = {'entity_id': 'scene.'+self.entity_id_ex}
+        try:
+            r = requests.post(url, data=json.dumps(payload), headers=headers)
+            print('')
+            print('[DEBUG] - Phản hồi từ Home Assistant: '+ str(r))
+            print('')
+            if str(r)=='<Response [200]>':
+                r=1
+                return r
+        except:
+            r = 0
+            return r
+
+    def domain_extract(self):
+        rr='scene'
+        return rr
+class automation():
+    def __init__(self,entity_id_ex=[],domain='',password=''):
+        self.entity_id_ex = entity_id_ex
+        self.domain = domain
+        self.password = password
+    def turn_on(self):
+        if version == 'right':
+            url = self.domain+'/api/services/automation/turn_on'
+            headers = {
+    'Authorization': 'Bearer '+ self.password,
+    'content-type': 'application/json',
+}
+        else:
+            url = self.domain + '/api/services/automation/turn_on?api_password='+ self.password
+            headers = {'content-type': 'application/json'}
+        payload = {'entity_id': 'automation.'+self.entity_id_ex}
+        try:
+            r = requests.post(url, data=json.dumps(payload), headers=headers)
+            print('')
+            print('[DEBUG] - Phản hồi từ Home Assistant: '+ str(r))
+            print('')
+            if str(r)=='<Response [200]>':
+                r=1
+                return r
+        except:
+            r = 0
+            return r
+
+    def domain_extract(self):
+        rr='automation'
+        return rr
 class light():
     def __init__(self,entity_id_ex=[],domain='',password=''):
         self.entity_id_ex = entity_id_ex
@@ -340,8 +402,16 @@ class define():
     def define(self):
         if self.domain_ex == 'switch':
             self.object = switch(self.entity_id_ex,self.domain,self.password)
+        if self.domain_ex == 'automation':
+            self.object = automation(self.entity_id_ex,self.domain,self.password)
+        if self.domain_ex == 'device_tracker':
+            self.object = device_tracker(self.entity_id_ex,self.domain,self.password)
+        if self.domain_ex == 'alarm_control_panel':
+            self.object = alarm_control_panel(self.entity_id_ex,self.domain,self.password)
         if self.domain_ex =='script':
             self.object = script(self.entity_id_ex,self.domain,self.password)
+        if self.domain_ex =='scene':
+            self.object = scene(self.entity_id_ex,self.domain,self.password)
         if self.domain_ex == 'light':
             self.object = light(self.entity_id_ex,self.domain,self.password)
         if self.domain_ex == 'sensor':

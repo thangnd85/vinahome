@@ -1,33 +1,43 @@
-# API GOOGLE. Nhập 1 nếu bạn có.
-api_active: 0
-# Khi dòng trên là 1 thì phải quăng cái file json vào đúng chỗ, đúng tên.
-google_application_credentials: bot.json
-# Nếu muốn kiểm tra thông tin thời tiết tại khu vực mình thì nhập nhé
-api_darksky: null
-# Để dảnh thôi, chứ giờ dùng Google đọc rồi. Sau này ai thích nghe FPT thì dev sẽ làm thêm giờ :))
-api_fpt: null
-voice: male
-# Cái này chắc không cần giải thích. Trên 084 thì dùng longlived-token nhé.
-domain: https://
-longlived-token: cl1teS2AX4
-hass_password: pass
-version_above084: right
-# Phần này cài đặt cho bot. Lưu ý hotword tự trên là file đuôi .pdml còn mấy cái universal mới là udml nhé.
-hotword: subex
-model: subex.umdl
-sensitivity: 0.9
-# Một số hotword chứa 2 model như thằng jarvis thì cần phải sửa lại như sau.
-# hotword: jarvis,jarvis
-# model: jarvis.udml
-# sensitivity: [0.8,0.8]
-
-# Cái này ai thích nghe nó nhắc ngày rằm, mùng 1 thì để 1 nhé.
-reminder: 1
-# Mấy cái này chắc bỏ qua đi =))
 led_do: 15
 led_xanh: 14
-# Ai không hiểu thì lên telegram để chat nhé. Trên đó lâu lâu cũng có người hỗ trợ đó :))
-
-
-
-
+# Chuyển giọng nói sang text, sau này rảnh thì làm cái offline cũng vui
+api_active: 1
+# 0: không dùng API Google, 1: dùng API Google, 2: dùng API FPT; 3: API VIETTEL
+# Lên Darksky đăng kí 1 cái, free nhé.
+api_darksky: c457d056f60c2aa93fd47339aad29ccd 
+# Nhập toạ độ nhà vào đây để darkky đọc cho đúng.
+toado: 
+- 11.0000
+- 106.0000
+# Đăng kí mấy cái API FPT vào đây để tránh tình trạng bị giới hạn
+api_fpt: Os1MlynwG2W7eNFecfME0EOHZ9hCcobk,hFewll7iiYesYsc5TQO9RyPWogvYGXff,1E9dz9Oyax0WFbqVxIsBQSTuCf04yA6I
+# Domain là gì thì nhập vào cho đúng, chú ý https nữa nếu có.
+domain: http://192.168.1.246:8123
+longlived-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmNjlmYjI0MzM3ZWQ0ZDA2OTc5YjhhYmNjNmZhZDNjMyIsImlhdCI6MTU4MTY0MTY3MiwiZXhwIjoxODk3MDAxNjcyfQ.YDPi91PO48JSzD1lXuUv3gCA-OVASrvsdeNqJxR3ix
+# Phần này nếu link home assistant với google home cũng cần, dùng chung luôn nhé.
+google_application_credentials: bot.json
+# Cái này chắc ko dùng nữa
+hass_password: pass
+# Muốn thêm hotword nữa thì cứ thêm vào theo
+hotword: jarvis,jarvis,subex
+model:
+- jarvis.umdl
+- subex.umdl
+reminder: 0
+sensitivity:
+- 0.75
+- 0.75
+- 0.6
+stand_alone: 0
+# Giọng đọc: viettel, fpt, google (đọc mà không lưu lại), google1 (đọc và lưu lại, sau này những câu tương tự sẽ nhanh hơn)
+tts: viettel
+version_above084: right
+# Cái này của FPT, sau này nếu thích thì làm thêm cái viettel nữa, hoặc google wave-net
+voice: leminh
+# Cái này dành cho ai có Respeaker, nếu không có thì chuyển thành 0 nhé.
+seed: 1
+# Ai có spotify premium thì cho thành 1 và nhập user, (client ID và client secret thì lấy trong dev, nhớ thêm cái return url là http://localhost:9999/ vào nhé, cái này tương tự như add spotify vào Homeassistant, nên xem hướng dẫn ở đó nhé.
+spotify: 1
+spotify_username: evii4f9ae7pgmswhtjj5nm84r
+spotify_client_id: 0e67ffbab4d446389551b5f9752f1045
+spotify_client_secret: 973dd723e8d044f68e410eb8de29dced

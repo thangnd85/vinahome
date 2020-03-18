@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+# Requires PyAudio.
+# -*- coding: utf-8 -*-
+# from helper import *
 try:
     from pyA20.gpio import gpio
     from pyA20.gpio import port

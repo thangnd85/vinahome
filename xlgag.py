@@ -1,14 +1,17 @@
-
+import os
 import sqlite3 as lite
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-con = lite.connect('data.db',check_same_thread=False)
-def hamcat_control(data):
+#if os.path.exists('data.db'):
+#    os.remove('data.db')
 
+con3 = lite.connect('data.db',check_same_thread=False)
+
+def hamcat_control(data):
     data1=data
     print('-------------Thực hiện xử lý ngôn ngữ---------------')
-    with con:
-        cur=con.cursor()
+    with con3:
+        cur=con3.cursor()
         cur.execute("SELECT * FROM hamcat")
         rows=cur.fetchall()
         for row in rows:
@@ -20,7 +23,7 @@ def hamcat_control(data):
     return data1
 def xu_ly_gan_giong(data):
     data=str(data).upper()
-    if 'MỞ' in data:
+    if 'MỞ' or 'BẬT' in data:
         print(data)
         locamo=data.find('MỞ')
         data=data[locamo+3:len(data)]
@@ -29,8 +32,8 @@ def xu_ly_gan_giong(data):
         data=data[locatat+4:len(data)]
     data=hamcat_control(data)
     entity_name=data.strip()
-    print(entity_name)
-    a=fuzz.ratio(entity_name,'ĐÈN PHÒNG KHÁCH')
+#    print(entity_name)
+    a=fuzz.ratio(entity_name,'HÔM NAY')
     print(a)
     return entity_name
 

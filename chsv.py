@@ -1,12 +1,12 @@
 import sqlite3 as lite
 import xlgag
 from fuzzywuzzy import fuzz
+
 con2 = lite.connect('hassdata.db')
 with con2:
 	cur =con2.cursor()
 	cur.execute("SELECT * FROM HASSINFO")
 	rows1 = cur.fetchall()
-
 
 def export_e_d(friendly_name):
 	entity_id_ex=[]
@@ -57,14 +57,15 @@ def check_fr(data):
 			break
 	print(device_arr)
 	if int(len(device_arr))==0:
-		print('tiến hành xử lý gần giống')
+#		print('tiến hành xử lý gần giống')
 		entity_name = xlgag.xu_ly_gan_giong(data)
-		print('xử lý ra được: '+ entity_name)
+#		print('xử lý ra được: '+ entity_name)
 		b=0
 		a=0
+		entity_name1=[]
 		for row in rows1:
 			a=fuzz.ratio(str(entity_name).upper(),row[2].upper())
-			print(str(entity_name).upper()+" so với "+row[2].upper() +" a có giá trị : "+  str(a))
+#			print(str(entity_name).upper()+" so với "+row[2].upper() +" a có giá trị : "+  str(a))
 			if a>b: 
 				b=a
 				entity_name1=row[2]

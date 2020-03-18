@@ -5,11 +5,11 @@ except:
   
 	pass
 #import begin
-#from helper import *
+from helper import *
 from pygame import mixer
 import dem
 import chsv
-import gih 
+import gih
 import execute
 import sqlite3 as lite
 import speaking
@@ -23,13 +23,8 @@ import gser
 import legal
 import sys
 from time import ctime, strftime
-import spot
-import pixels
 import requests
 interrupted = False
-spo=spot.spo('drlbminh','d6881de9093040d8b9c18d669224b559','8f233b0f5037456b9c5e084f3f069efd','http://localhost:9999/')
-spotipy=spo.assign()
-
 reminder = gih.get_config('reminder')
 ggcre = gih.get_config('google_application_credentials')
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ggcre
@@ -48,8 +43,18 @@ longlivedtoken = gih.get_config('longlived-token')
 voice = gih.get_config('voice')
 con1 = gih.data_init()
 con_command = gih.data_command_init()
-reminder = gih.get_config('reminder')
-
+spotify = gih.get_config('spotify')
+if spotify ==1:
+	import spot
+seed = gih.get_config('seed')
+if seed == 1:
+	import pixels
+spotify_username = gih.get_config('spotify_username')
+spotify_client_id = gih.get_config('spotify_client_id')
+spotify_client_secret = gih.get_config('spotify_client_secret')
+if spotify == 1:
+	spo=spot.spo(spotify_username,spotify_client_id,spotify_client_secret,'http://localhost:9999/')
+	spotipy=spo.assign()
 #khiển led-------------
 led_xanh = gih.get_config('led_xanh')
 led_do = gih.get_config('led_do')
@@ -84,7 +89,6 @@ else:
 	trial_times = 0
 
 
-
 def interrupt_callback():
 
 	global interrupted
@@ -97,10 +101,6 @@ if version == 'right':
 	password = longlivedtoken
 else:
 	pass
-
-
-
-
 
 def hamcat(data):
 	data1=data
@@ -221,7 +221,7 @@ def execute_command(data,rows_command,domain,password):
 					url = domain + '/api/services/'+domain_com+'/'+row[2]+'?api_password='+password
 					headers = {'content-type': 'application/json'}
 				payload = {'entity_id': row[1]}
-				
+		
 				r = requests.post(url, data=json.dumps(payload), headers=headers)
 				
 				
@@ -263,8 +263,8 @@ def jarvis(data):
 		timkiemthucthi(data,friendly_name_hass,sta)
 
 def xuly():
-	pixels.pixels.wakeup() 
-
+	if seed == 1:
+		pixels.pixels.wakeup() 
 	if ok == 0:
 		trial_times=0
 		speaking.speak('đây là bản dùng thử')
@@ -277,24 +277,29 @@ def xuly():
 			sys.exit(0)
 	print('[MAIN] - TIẾP NHẬN XỬ LÝ')
 	print('')
-	try:
-		dem.player.audio_set_volume(40)
-	except:
-		pass
-	try:
-		global volume
-		volume=spotipy.devices()
-
-		volume=volume['devices'][0]['volume_percent']
-		print('volume truoc khi giam'+ str(volume))
-		spotipy.volume(36)
-	except:
-		pass
+	spotify = gih.get_config('spotify')
+	if spotify == 1:
+		try:
+			dem.player.audio_set_volume(40)
+		except:
+			pass
+		try:
+			global volume
+			volume=spotipy.devices()
+			volume=volume['devices'][0]['volume_percent']
+#			print('volume truoc khi giam '+ str(volume))
+			spotipy.volume(36)
+		except:
+			pass
+	else: 
+		player_volume=dem.radio.lay_am_luong()
+		dem.player.audio_set_volume(player_volume - 35)
 	data ='interruptinterrupt'
 	while data =='interruptinterrupt':
 		print(colored('tôi ĐANG CHỜ RA LỆNH - BẬT TẮT <TÊN THIẾT BỊ> HAY HỎI MẤY GIỜ RỒI...','green'))
 		conti = 1
-
+		from pygame import mixer
+		mixer.init(48000, -16, 1, 4096)
 		mixer.music.load('resources/ding.wav')
 		mixer.music.play()
 		try:
@@ -333,15 +338,17 @@ def xuly():
 				if hotword.upper() in str(data).upper():
 					data == 'interruptinterrupt'
 #	Sử dụng text input
-			elif api_boolean == 1111:
+			else:
 				data=input("Nhập lệnh cần thực thi:  ")
+				conti = 1
 		except:
 			conti = 0
 			break
 		
 	mixer.music.load('resources/dong.wav')
 	mixer.music.play()
-	pixels.pixels.think() 
+	if seed == 1:
+		pixels.pixels.think() 
 	if conti == 1 and str(data).upper() != 'ĐƯỢC RỒI':
 		try:
 			jarvis(data)
@@ -356,28 +363,30 @@ def xuly():
 	except:
 		print('writing ai_data ee')
 		pass
-	try:
-		player_volume=dem.radio.lay_am_luong()
-		dem.player.audio_set_volume(player_volume - 35)
-		time.sleep(0.1)
-		dem.player.audio_set_volume(player_volume - 20)
-		time.sleep(0.1)
-		dem.player.audio_set_volume(player_volume)
-		
-	except:
-		pass		
-	try:
-		# volume=dem.spotipy[1].devices(dem.spotipy[0])
-		# volume=volume[2]
-		print('volume sau khi giam: ' + str(volume))
-		spotipy.volume(volume-35)
-		time.sleep(0.1)
-		spotipy.volume(volume-20)
-		time.sleep(0.1)
-		spotipy.volume(volume)
-	except Exception as e:
-		print('spotify: '+str(e))
-	pixels.pixels.off()
+	if spotify == 0:
+		try:
+			player_volume=dem.radio.lay_am_luong()
+			dem.player.audio_set_volume(player_volume - 35)
+			time.sleep(0.1)
+			dem.player.audio_set_volume(player_volume - 20)
+			time.sleep(0.1)
+			dem.player.audio_set_volume(player_volume)
+		except:
+			pass		
+	if spotify ==1:
+		try:
+			volume=dem.spotipy[1].devices(dem.spotipy[0])
+			volume=volume[2]
+#			print('volume sau khi giam: ' + str(volume))
+			spotipy.volume(volume-35)
+			time.sleep(0.1)
+			spotipy.volume(volume-20)
+			time.sleep(0.1)
+			spotipy.volume(volume)
+		except Exception as e:
+			print('spotify: '+str(e))
+	if seed ==1:
+		pixels.pixels.off()
 	print(colored('*****************SẴN SÀNG CHỜ GỌI****************','green'))
 
 speaking.speak('Xin chào, tôi là Jarvis, trợ lý ảo cho ngôi nhà thông minh.')

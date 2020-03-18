@@ -1,8 +1,8 @@
 import dem
 import speaking
 import processss
-
-
+import chsv
+import gih
 def on_mo(friendly_name_hass,data):
     print(friendly_name_hass)
     p = 0
@@ -23,7 +23,6 @@ def on_mo(friendly_name_hass,data):
             p+=1
     
     if len(friendly_name_hass)==0 or aaaa==1:
-
         speaking.speak("vui lòng nói lại tên thiết bị")
         dem.time.sleep(0.5)
         processss.mixer.music.load('resources/ding.wav')

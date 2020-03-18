@@ -6,7 +6,6 @@ import yaml
 import time
 from termcolor import colored
 def get_config(request):
-
     stream = open('config.yaml','r')
     a = yaml.load(stream,Loader=yaml.SafeLoader)
     stream.close()
@@ -44,7 +43,6 @@ def info_user():
     if usin is not None: 
         cur2 = usin.cursor()
         cur2.execute(sql_create_projects_table)
-
     return usin
 def data_init():
     if os.path.exists('hassdata.db'):
@@ -60,6 +58,18 @@ def data_init():
         cur.execute(sql_create_projects_table)
 
     return con1
+def data_command_init():
+    con2 = lite.connect('command.db',check_same_thread=False)
+    sql_command_table = """ CREATE TABLE IF NOT EXISTS customcommand (
+                                            Command text,
+                                            entity_id text,
+                                            service text
+                                            ); """
+    if con2 is not None: 
+        cur = con2.cursor()
+        cur.execute(sql_command_table)
+    return con2
+
 def data_command_init():
     con2 = lite.connect('command.db',check_same_thread=False)
     sql_command_table = """ CREATE TABLE IF NOT EXISTS customcommand (
@@ -111,7 +121,7 @@ def getinfo(domain, password, con1):
             except:
                 friendly_name_ex =""
                 pass
-            if domain_ex == 'script' or domain_ex == 'light' or domain_ex == 'switch' or domain_ex=='sensor' or domain_ex =='binary_sensor' or domain_ex =='media_player' or domain_ex =='cover' or domain_ex =='input_select' or domain_ex =='alarm_control_panel' or domain_ex =='climate' or domain_ex =='device_tracker' :
+            if domain_ex == 'script' or domain_ex == 'light' or domain_ex == 'switch' or domain_ex=='sensor' or domain_ex =='binary_sensor' or domain_ex =='media_player' or domain_ex =='cover' or domain_ex =='input_select' or domain_ex =='alarm_control_panel' or domain_ex =='climate' or domain_ex =='device_tracker' or domain_ex == 'automation' or domain_ex == 'scene' :
                 pre_write_data = (entity_id_ex, domain_ex, friendly_name_ex)
                 
                 with con1:

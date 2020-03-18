@@ -1,0 +1,14 @@
+[Unit]
+Description=Bot
+After=syslog.target network.target
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/vinahome
+ExecStart=/bin/bash -lc '. bot.sh'
+RestartSec=1
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=vinahome
+[Install]
+WantedBy=multi-user.target

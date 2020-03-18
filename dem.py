@@ -2,6 +2,10 @@
 # Requires PyAudio.
 # -*- coding: utf-8 -*-
 # from helper import *
+import queue
+import urllib.request
+import urllib.parse
+import gih
 import chsv
 import processss
 import onoff
@@ -24,6 +28,10 @@ import spot
 import speech_recognition as sr
 import wether as wt
 from pygame import mixer
+spotify = gih.get_config('spotify')
+spotify_username = gih.get_config('spotify_username')
+spotify_client_id = gih.get_config('spotify_client_id')
+spotify_client_secret = gih.get_config('spotify_client_secret')
 def recordAudio():
 	r = sr.Recognizer()
 	with sr.Microphone() as source:
@@ -54,7 +62,7 @@ def recordFPT():
 	data = ""
 	keys = ['Os1MlynwG2W7eNFecfME0EOHZ9hCcobk','hFewll7iiYesYsc5TQO9RyPWogvYGXff','1E9dz9Oyax0WFbqVxIsBQSTuCf04yA6I']
 	api_fpt_key = random.choice(keys)
-	print (api_fpt_key)
+#	print (api_fpt_key)
 	try:
 		import requests
 		url = 'https://api.fpt.ai/hmi/asr/general'
@@ -119,21 +127,17 @@ def recordVTCC():
 		print('Lỗi Viettel')
 		pass
 	return data
-	
 def answer(ans1,ans2,ans3):
 	caunoi=[ans1,ans2,ans3]
 	spea=random.choice(caunoi)
 	speaking.speak(spea)
-
 def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
-	
 	global player
 	print('[MAIN] - THỰC THI TÁC VỤ')
 	print('---------')
 	processss.timlenhtrongdata(data)
-
 	if row0_in_db== "KHỎE KHÔNG":
-		answer("tôi khỏe. ","khỏe lắm chủ nhân ","khỏe chứ chủ nhân. ",)
+		answer("tôi khỏe.","khỏe lắm chủ nhân","khỏe chứ chủ nhân.")
 #camera - dieu khien xoay
 	elif row0_in_db == "CAMERA":
 		print('vao camera')
@@ -182,8 +186,6 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 		else:
 			check_day=amlich.ngaykhac(data)
 		amlich.kiemtra_amlich(check_day[0],check_day[1],check_day[2],check_day[3],check_day[4])
-		
-
 #Hỏi thứ
 	elif row0_in_db == "THỨ MẤY":
 		check_thu=[]
@@ -197,18 +199,13 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 			check_thu=thu.homnay()
 		else:
 			check_thu=thu.ngaykhac(data)
-		
-
 		result_thu=thu.kiemtra_thu(check_thu[0],check_thu[1],check_thu[2],check_thu[3],check_thu[4])
 		speaking.speak(result_thu[0]+" là " + result_thu[1] +  result_thu[2] + ' tháng '+ str(result_thu[3]))
-		
 # Ngày lễ
 	elif row0_in_db == "NGÀY LỄ":
-#		answer('không có chi. ','rất vui vì giúp được chủ nhân ',' đừng bận tâm ')
 		ngayle_res=[]
 		ngayle_res=ngayle.ngayle_check(data)
 		speaking.speak(ngayle_res[0] + ' Còn '+str(ngayle_res[1])+' ngày nữa là đến '+ngayle_res[2]  + '. Đó là ngày '+ngayle_res[3] +' tháng '+ngayle_res[4] +' năm '+ngayle_res[5] )
-
 #Cảm ơn	
 	elif row0_in_db == "CẢM ƠN":
 		answer('không có chi. ','rất vui vì giúp được chủ nhân ',' đừng bận tâm ')
@@ -238,6 +235,7 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 			speaking.speak('Các lệnh thường dùng, Hỏi giờ, thời tiết, thứ ngày tháng, thông tin, lệnh, phát nhạc, hẹn giờ, dịch từ, dịch câu, âm lịch, ngày lễ. Dùng lệnh trợ giúp kèm theo các lệnh muốn tra cứu để được hướng dẫn chi tiết hơn.')
 #Hỏi giờ
 	elif row0_in_db == "MẤY GIỜ":
+		import speaking
 		from time import ctime, strftime
 		gio = strftime("%H")
 		gio = list(gio)
@@ -272,12 +270,10 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 				docphut=phut[0] + ' mươi mốt phút '
 			else:
 				docphut = phut[0]+ ' mươi '+ phut[1]+ ' phút '
-
-		speaking.speak("BÂY GIỜ LÀ " + docgio + docphut)
+		speaking.speakvn("BÂY GIỜ LÀ " + docgio + docphut)
 #Tin tức (TTS)
 	elif row0_in_db == "TIN TỨC":
 		tintuc.tintucmoi()
-
 	elif row0_in_db == "XỔ SỐ":
 		print ('Kết quả xổ số')
 		loto.check(data)
@@ -285,24 +281,12 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 	elif row0_in_db == "CƯỜI":
 		truyen = fun.truyen()
 		speaking.speak(truyen)
-
-#Hỏi ngày			
-	# if row0_in_db=="VỊ TRÍ":
-	#	 if "CỦA" in data:
-	#		 locationcua = data.find('CỦA')
-	#		 data = data[locationcua+4:len(data)]
-	#		 location = data.strip(" ")
-	#		 speaking.speak("đây là vị trí của  " + location )
-	#		 webbrowser.open("https://www.google.nl/maps/place/" + location + "/&amp;")
-	# elif row0_in_db == 'NHẮC':
-
 	elif row0_in_db == "RADIO":
 		try:
 			player.stop()
 		except:
 			pass
 		player=radio.phat_radio(data)
-
 	elif row0_in_db=="ĐI NGỦ":
 		pass
 	elif row0_in_db=="LÀ GÌ":
@@ -313,24 +297,100 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 			speaking.speak('Theo wikipedia: '+rep)
 		speaking.speak('để tôi tìm xem nào')
 		execute.run_thread(wifi,data) 
-
 # Phát video
 	elif row0_in_db=="PHÁT" :
-		global spotipy
-		try:
-			player.stop()
-		except:
-			pass
-		spotipy=spot.play_current_playlist('j81xwhr6zxkba3a5txkhrbsz0','d6881de9093040d8b9c18d669224b559','8f233b0f5037456b9c5e084f3f069efd','http://localhost:9999/',data)
-		if spotipy[0] ==False:
+		if spotify == 1:
+			global spotipy
+			try:
+				player.stop()
+			except:
+				pass
+			spotipy=spot.play_current_playlist(spotify_username,spotify_client_id,spotify_client_secret,'http://localhost:9999/',data)
+		if spotify == 0:
+			global link_yt
+			try:
+				we.put('quit')
+				w.put('quit')
+				wet.put('quit')
+			except:
+				print('er put')
+			we=queue.Queue()
+			locationtim=data.find('PHÁT')
+			data=data[locationtim+5:len(data)]
+			query_string = urllib.parse.urlencode({"search_query" : data})
+			html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
+			search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
+			random_song=random.randint(0,10)
+			urlyt="http://www.youtube.com/watch?v=" + search_results[random_song]
+			search_pre_write = (search_results[0],search_results[1],search_results[2],search_results[3],search_results[4],search_results[5],search_results[6],search_results[7],search_results[8],search_results[9],search_results[10],random_song)
+			import speaking
+			import threading
+			import vlc
+			import pafy
+			import gih
+			speaking.speakvn('Chuẩn bị phát nhạc')
+			def yt_play(urlyt,we):  
+				try:
+					video = pafy.new(urlyt)
+					best = video.getbestaudio()
+					playurl = best.url
+					Instance = vlc.Instance()
+					player = Instance.media_player_new()
+					Media = Instance.media_new(playurl)
+					Media.get_mrl()
+					player.set_media(Media)
+					player.play()
+					we.put('start')
+					m= alsaaudio.Mixer()
+					vol = m.getvolume()
+					vol = int(vol[0])
+					player_volume = vol
+					player.audio_set_volume(player_volume)
+					while True: 
+						player.play()
+						item = we.get()
+						if item == 'quit':
+							player.stop()
+							break
+						if item == 'listen_mode':
+							m= alsaaudio.Mixer()
+							vol = m.getvolume()
+							vol = int(vol[0])
+							player_volume = vol
+							player.audio_set_volume(player_volume - 35)
+						if item == 'normal_mode':
+							m= alsaaudio.Mixer()
+							vol = m.getvolume()
+							vol = int(vol[0])
+							player_volume = vol
+							player.audio_set_volume(player_volume - 35)
+							time.sleep(0.7)
+							player.audio_set_volume(player_volume - 25)
+							time.sleep(0.7)
+							player.audio_set_volume(player_volume - 15)
+							time.sleep(0.7)
+							player.audio_set_volume(player_volume)
+				except Exception as e:
+					print('error vlc')
+					print(e)
+			t=threading.Thread(target = yt_play, args = (urlyt,we))
+			t.start()
+			link_yt = gih.info_user()
+			with link_yt:
+				link_yt_ex = link_yt.cursor()
+				link_yt_ex.execute("INSERT INTO link_music_youtube VALUES(?,?,?,?,?,?)",search_pre_write)
+		else:
 			player= radio.play_nhac(data,friendly_name_hass)
-
+			player.play()
 	elif row0_in_db=="TIẾP THEO":
-		try:
-			player.stop()
-		except:
-			pass
-		player=radio.phat_tiep_theo()
+		if spotify == 1:
+			try:
+				player.stop()
+			except:
+				pass
+			spotipy=spot.play_current_playlist(spotify_username,spotify_client_id,spotify_client_secret,'http://localhost:9999/',data)
+		else:
+			player=radio.phat_tiep_theo()
 # Google word translate
 	elif row0_in_db=="CÓ NGHĨA" :
 		from googletrans import Translator
@@ -348,7 +408,7 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 			print (translations.text)
 			speaking.speak('Từ ')
 			speaking.speaken (dataen)
-			speaking.speak ('trong tiếng việt nghĩa là: '+ translations.text)		
+			speaking.speak('trong tiếng việt nghĩa là: '+ translations.text)		
 #To English
 		elif 'TIẾNG chủ nhân' in data:
 			m = re.search ('(.+?) TIẾNG chủ nhân', data)
@@ -390,20 +450,18 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 		from googletrans import Translator
 		translator = Translator()
 		continue_go=1
-		speaking.speak ('OK, đọc câu cần dịch đi chủ nhân')		
+		speaking.speak ('OK, đọc câu cần dịch đi chủ nhân')
+		processss.mixer.music.load('resources/ding.wav')
+		processss.mixer.music.play()
 		more_data = processss.re_ask()
 		print (more_data)		
-#		def gconv (data,more_data):
-#			continue_go = 1
-#			empty = []
 		if len(more_data) > 0:
 			while True:
 				print ('Google translate: '+data)
 				print ('Data translate: '+more_data)
-#			   speaking.speak('')
-				processss.mixer.music.load('resources/ding.wav')
+				processss.mixer.music.load('resources/dong.wav')
 				processss.mixer.music.play()
-				if 'TIẾNG chủ nhân' in data:
+				if 'TIẾNG ANH' in data:
 					translations = translator.translate (more_data, dest = 'en')
 					print (translations.text)
 					speaking.speaken(translations.text)
@@ -432,11 +490,10 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 					speaking.speak('thoát khỏi chế độ dịch')
 					continue_go = 0
 					break
-					
 				else:
 					break
-		
-#		return more_data, continue_go
+		else:
+			speaking.speakvn('Xin lỗi, tôi không nghe được câu hỏi')
 # Hẹn giờ		
 	elif row0_in_db == "HẸN GIỜ":
 		onoff.hen_gio(data)
@@ -444,23 +501,35 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 		onoff.t1.cancel()
 		speaking.speak("đã hủy hẹn giờ ")
 	elif row0_in_db=="DỪNG":
-		try:
-			player.stop()
-		except Exception as e:
-			print(e)
-			pass
-		at=spot.spo('drlbminh','d6881de9093040d8b9c18d669224b559','8f233b0f5037456b9c5e084f3f069efd','http://localhost:9999/')
-
-		sp=at.assign()
-		de=sp.devices()
-		de=de['devices']
-		
-		for des in de:
-			print(des['id'])
+		if spotify ==1:
 			try:
-				at.pause(sp,des['id'])
-			except Exception as t:
-				print(t)
+				player.stop()
+			except Exception as e:
+				print(e)
+				pass
+			at=spot.spo(spotify_username,spotify_client_id,spotify_client_secret,'http://localhost:9999/')
+			sp=at.assign()
+			de=sp.devices()
+			de=de['devices']
+			for des in de:
+				print(des['id'])
+				try:
+					at.pause(sp,des['id'])
+				except Exception as t:
+					print(t)
+					pass
+		else:
+			try:
+				w.put('quit')
+			except:
+				pass
+			try:
+				we.put('quit')
+			except:
+				pass
+			try:
+				wet.put('quit')
+			except:
 				pass
 	elif row0_in_db=="TO LÊN":
 		radio.to_len()
@@ -478,7 +547,6 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 	elif row0_in_db=="TÊN":
 		if "tôi" in data: 
 			answer('tôi là BOT LB','tôi là LB ','tôi tên LB',)
-
 	elif row0_in_db=="":
 		speaking.speak('tôi không hiểu rồi đại ca ơi')
 # Trạng thái
@@ -497,10 +565,10 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 			y = x+datetime.timedelta(1)
 			day = str(y.day)
 			tt = wt.weekly('latlon',latlong)
-			speaking.speak('Ngày mai '+tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
+			speaking.speakvn('Ngày mai '+tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
 		elif 'HÔM NAY' in data:
 			tt = wt.current('latlon',latlong)
-			speaking.speak('Hôm nay '+tt['overal']+', Nhiệt độ là '+str(tt['temp']) +' độ C,  độ ẩm là ' + str(tt['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt['wind']) + ' km/h.')
+			speaking.speakvn('Hôm nay '+tt['overal']+', Nhiệt độ là '+str(tt['temp']) +' độ C,  độ ẩm là ' + str(tt['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt['wind']) + ' km/h.')
 		elif 'GIỜ TỚI' in data:
 			string = data
 			num = [int(s) for s in string.split() if s.isdigit()]
@@ -514,15 +582,15 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 					day = 'tomorrow'
 					ngay = ' giờ ngày mai '
 				tt = wt.hourly('latlon',latlong)
-				speaking.speak('Thời tiết lúc ' + str(y.hour) + ngay+ tt[day]["%.1f" %y.hour]['overal']+', Nhiệt độ là '+str(tt[day]["%.1f" %y.hour]['temp']) +' độ C,  độ ẩm là ' + str(tt[day]["%.1f" %y.hour]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]["%.1f" %y.hour]['wind']) + ' km/h.')
+				speaking.speakvn('Thời tiết lúc ' + str(y.hour) + ngay+ tt[day]["%.1f" %y.hour]['overal']+', Nhiệt độ là '+str(tt[day]["%.1f" %y.hour]['temp']) +' độ C,  độ ẩm là ' + str(tt[day]["%.1f" %y.hour]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]["%.1f" %y.hour]['wind']) + ' km/h.')
 			else:
 				pass
 		elif 'TUẦN' in data.upper():
-			for i in range (1,3):
+			for i in range (1,7):
 				y = x+datetime.timedelta(i)
 				day = str(y.day)
 				tt = wt.weekly('latlon',latlong)
-				speaking.speak('Ngày '+ day + tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
+				speaking.speakvn('Ngày '+ day + tt[day]['overal']+', Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C, Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
 		elif 'NGÀY TỚI' in data.upper():
 			string = data
 			num = [int(s) for s in string.split() if s.isdigit()]
@@ -534,7 +602,7 @@ def hamthucthi(row0_in_db,data,friendly_name_hass,sta):
 					speaking.speak('Ngày '+ day + tt[day]['overal']+' Nhiệt độ thấp nhất '+str(tt[day]['mintemp']) +' độ C '+' Nhiệt độ cao nhất '+str(tt[day]['maxtemp']) +' độ C,  độ ẩm là ' + str(tt[day]['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt[day]['wind']) + ' km/h.')
 		else:
 			tt = wt.current('latlon',latlong)
-			speaking.speak('Xin lỗi, tôi không nghe bạn hỏi thời tiết ngày nào')			
+			speaking.speakvn('Hôm nay '+tt['overal']+', Nhiệt độ là '+str(tt['temp']) +' độ C,  độ ẩm là ' + str(tt['hum']) + ' phần trăm, tốc độ gió trung bình ' + str(tt['wind']) + ' km/h.')			
 	else:
 		answer('tôi không hiểu','tôi nghe không rõ',' vui lòng nói lại đi')
 def mainloop():
