@@ -1,4 +1,4 @@
-api_active: 1
+api_active: 0
 # 0: không dùng API Google, 1: dùng API Google, 2: dùng API FPT; 3: API VIETTEL
 api_darksky: c457d056f60c2aa93fd47339aad294da
 toado: 
@@ -22,9 +22,11 @@ sensitivity:
 - 0.6
 stand_alone: 0
 tts: viettel
+# cho tts Viettel cần token
+token: 1E9dz9Oyax0WFbqVxIsBQSTuCf04yA6I
 version_above084: right
 voice: leminh
-seed: 1
+seed: 0
 spotify: 0
 spotify_username: ndt.spotify@gmail.com
 spotify_client_id: 652d7fe6b87c4c5d852d042c5ca6c47f
