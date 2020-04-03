@@ -182,7 +182,8 @@ def speak(audioString):
 				t = float(t)
 				mp3_fp.seek(0)
 				mixer.init()
-				pixels.pixels.speak() 
+				if seed == 1:
+				  pixels.pixels.speak() 
 				mixer.music.load(mp3_fp)
 				mixer.music.play()
 				mp3_fp.flush()
