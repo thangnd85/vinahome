@@ -1,33 +1,35 @@
-api_active: 0
+api_active: 3
 # 0: không dùng API Google, 1: dùng API Google, 2: dùng API FPT; 3: API VIETTEL
-api_darksky: c457d056f60c2aa93fd47339aad294da
+api_darksky: c457d056f60c2aa93fd47339aadxxxx
 toado: 
 - 11.555358
 - 106.172483
-api_fpt: Os1MlynwG2W7eNFecfME0EOHZ9hCcobk,hFewll7iiYesYsc5TQO9RyPWogvYGXff,1E9dz9Oyax0WFbqVxIsBQSTuCf04yA6I
+api_fpt:
+- #Tạo tại fpt.ai
+- #Tạo thêm acc nữa tại fpt.ai
+- # Tạo thêm acc thứ 3, để vượt giới hạn 
 domain: http://192.168.1.246:8123
 google_application_credentials: bot.json
 hass_password: pass
 hotword: jarvis,jarvis,subex
 led_do: 15
 led_xanh: 14
-longlived-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmNjlmYjI0MzM3ZWQ0ZDA2OTc5YjhhYmNjNmZhZDNjMyIsImlhdCI6MTU4MTY0MTY3MiwiZXhwIjoxODk3MDAxNjcyfQ.YDPi91PO48JSzD1lXuUv3gCA-OVASrvsdeNqJxR3iQw
+longlived-token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..YDPi91PO48JSzD1lXuUv3gCA-OVASrvsdeNqJxR3iQw
 model:
 - jarvis.umdl
 - subex.umdl
 reminder: 0
 sensitivity:
-- 0.75
-- 0.75
-- 0.6
+- 0.7
+- 0.7
+- 0.8
 stand_alone: 0
-tts: viettel
-# cho tts Viettel cần token
-token: 1E9dz9Oyax0WFbqVxIsBQSTuCf04yA6I
+tts: google
 version_above084: right
 voice: leminh
-seed: 0
-spotify: 0
-spotify_username: ndt.spotify@gmail.com
-spotify_client_id: 652d7fe6b87c4c5d852d042c5ca6c47f
-spotify_client_secret: 4d723ee2fffa4503b3ecdc81a5c8b5e3
+token: #Lấy tại vtcc.ai
+seed: 1
+spotify: 1
+spotify_username: #Cần account preminum
+spotify_client_id: 0e67ffbab4d446389551b5f9752f1045
+spotify_client_secret: 973dd723e8d044f68e410eb8de29dced
