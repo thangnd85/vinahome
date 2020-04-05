@@ -42,11 +42,11 @@ def install_app():
 		os.system('sudo apt-get -y -qq upgrade  >> /dev/null')
 
 		print('ĐANG CÀI ĐẶT CÁC ỨNG DỤNG CẦN THIẾT. HÃY KIÊN NHẪN ....')
-		print('Tổng số ứng dụng: '+str(len(a)-1))
+		print('Tổng số ứng dụng: '+str(len(a)))
 	print ("ĐANG CÀI ĐẶT ỨNG DỤNG: ") 
-	while i <len(a)-1:
+	while i <len(a) -1:
 		i+=1
-		print('ĐANG CÀI '+str(i)+'/'+str(len(a)-1))
+		print('ĐANG CÀI '+str(i)+'/'+str(len(a)))
 #		sys.stdout.write(">>>")
 		b=os.system('sudo apt-get -y -qq install ' + a[i] +'>>/dev/null')
 		if b==0:
@@ -85,9 +85,9 @@ def install_pip():
 #	if up==0 or up==1:
 #		os.system('sudo apt-get upgrade')
 	print('ĐANG CÀI ĐẶT MODULE')
-	while i <len(pip):
+	while i < len(pip) - 1:
 		i+=1
-		print ('MODULE '+str(i)+'/'+str(len(pip)-1))
+		print ('MODULE '+str(i)+'/'+str(len(pip)))
 #		sys.stdout.write ('>>>')
 		b=os.system('env/bin/python -m pip install --upgrade --no-cache-dir --default-timeout=1000 --quiet ' + pip[i])
 		if b==0:
@@ -122,21 +122,7 @@ def build_snowboy():
 		time.sleep(2)
 		os.system('sudo cp '+ path+'/swig/Python3/snowboydetect.py ./')
 		time.sleep(2)
-#	try:
-#		os.system('sudo pip3 install -U youtube-dl')
-#	except:
-#		pass
-#	os.system('sudo chmod -R 0777 /etc/samba/smb.conf')
 	os.system('sudo chmod -R 0777 /etc/pulse/default.pa')
-#		samba.writelines('[lbminh-bot]\n')
-#		samba.writelines('comment = lbminh-bot\n')
-#		samba.writelines('path = /home/pi/lbminh-bot\n')
-#		samba.writelines('browseable = yes\n')
-#		samba.writelines('guest ok= yes\n')
-#		samba.writelines('read only = no\n')
-#		samba.writelines('create mask = 0777\n')
-#	os.system('sudo service smbd restart')
-#	time.sleep(2)	
 	os.system('sudo touch /lib/systemd/system/bot.service')
 	time.sleep(1)
 	os.system('sudo rm /lib/systemd/system/bot.service')
@@ -150,9 +136,7 @@ def build_snowboy():
 	os.system('systemctl --user daemon-reload')
 	os.system('sudo usermod -aG pulse-access pi')
 	time.sleep(1)
-#	os.system('sudo systemctl enable bot.timer')
 	time.sleep(1)
-#	os.system('jack_control start')
 def config_bot():
 	import gih
 	from termcolor import colored
@@ -384,11 +368,12 @@ try:
 	os.system('sudo chmod -R 0777 '+path)
 except:
 	print('chmod ee')
-print("CHƯƠNG TRÌNH CÀI ĐẶT BAO GỒM 4 PHẦN: ")
+print("CHƯƠNG TRÌNH CÀI ĐẶT BAO GỒM 5 PHẦN: ")
 print("1/ CÀI ĐẶT APT  ")
 print("2/ CÀI ĐẶT PACKAGE  ")
-print("3/ CẤU HÌNH MICROPHONE VÀ LOA ")
-print("4/ HỖ TRỢ CẤU HÌNH BOT")
+print("3/ CÀI ĐẶT SNOWBOY VÀ SERVICE  ")
+print("4/ CẤU HÌNH MICROPHONE VÀ LOA ")
+print("5/ HỖ TRỢ CẤU HÌNH BOT")
 print('--------------------------------------------------------------------')
 time.sleep(0.7)
 a=input('Bạn có muốn chạy PHẦN 1 - CÀI ĐẶT GÓI không? - Xin trả lời (Y/N): ')
@@ -406,7 +391,7 @@ else:
 	time.sleep(0.7)
 	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
 	time.sleep(0.7)
-azz=input('Bạn có muốn chạy PHẦN 2 - BUILD SNOWBOY VÀ SERVICE? - Xin trả lời (Y/N): ')
+azz=input('Bạn có muốn chạy PHẦN 3 - BUILD SNOWBOY VÀ SERVICE? - Xin trả lời (Y/N): ')
 if str(azz).upper() == 'Y':
 	build_snowboy()
 else:
@@ -414,7 +399,7 @@ else:
 	print('Bỏ qua phần cài đặt gói - chuyển sang phần tiếp theo...')
 	time.sleep(0.7)
 
-b=input('Bạn có muốn chạy PHẦN 2 - CẤU HÌNH MICROPHONE VÀ LOA không? - Xin trả lời (Y/N): ')
+b=input('Bạn có muốn chạy PHẦN 4 - CẤU HÌNH MICROPHONE VÀ LOA không? - Xin trả lời (Y/N): ')
 time.sleep(0.7)
 if str(b).upper() == 'Y':
 	mic_set()
@@ -422,7 +407,7 @@ else:
 	time.sleep(0.7)
 	print('Bỏ qua phần cài đặt microphone và loa')
 	time.sleep(0.7)
-c=input('Bạn có muốn chạy PHẦN 3- HỖ TRỢ CẤU HÌNH BOT không? - Xin trả lời (Y/N): ')
+c=input('Bạn có muốn chạy PHẦN 5- HỖ TRỢ CẤU HÌNH BOT không? - Xin trả lời (Y/N): ')
 time.sleep(0.7)
 if str(c).upper() == 'Y':
 	from termcolor import colored
