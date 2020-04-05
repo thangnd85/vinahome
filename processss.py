@@ -292,10 +292,10 @@ def xuly():
 		except:
 			pass
 	else:
-		player_volume=dem.radio.lay_am_luong()
-		dem.player.audio_set_volume(player_volume - 35)
+#		player_volume=dem.radio.lay_am_luong()
+#		dem.player.audio_set_volume(player_volume - 35)
 # Nếu không chạy thì gõ dấu # vào 2 dong bên trên và bỏ dấu # ở dòng bên dưới nhé
-#		pass
+		pass
 	data ='interruptinterrupt'
 	while data =='interruptinterrupt':
 		print(colored('tôi ĐANG CHỜ RA LỆNH - BẬT TẮT <TÊN THIẾT BỊ> HAY HỎI MẤY GIỜ RỒI...','green'))
