@@ -46,3 +46,6 @@ To start manualy:
 Contact:
 
     Email: thangsmhome@gmail.com
+
+Donate Momo / Airpay / ViettelPay
+![alt text](https://dummyimage.com/160x40/000/fff&text=0985435685)
