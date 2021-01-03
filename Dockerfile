@@ -56,48 +56,48 @@ RUN apt-get install -y python3-sklearn
 RUN apt-get install -y python3-sklearn-lib 
 RUN mkdir /usr/share/vinahome
 COPY . /usr/share/vinahome
-RUN pip install --no-cache-dirwheel
-RUN pip install --no-cache-dirPySDL2
-RUN pip install --no-cache-dirrequests
-RUN pip install --no-cache-dirregex
-RUN pip install --no-cache-dirpya20
-RUN pip install --no-cache-dirtermcolor
-RUN pip install --no-cache-dirpyAesCrypt
-RUN pip install --no-cache-dircffi
-RUN pip install --no-cache-dirgoogle-cloud-speech
-RUN pip install --no-cache-dirsix
-RUN pip install --no-cache-dirgoogletrans
-RUN pip install --no-cache-dirwikipedia
-RUN pip install --no-cache-dirforecastiopy
-RUN pip install --no-cache-dirclick
-RUN pip install --no-cache-dirpyyaml
-RUN pip install --no-cache-dirdatetime
-RUN pip install --no-cache-dirbs4
-RUN pip install --no-cache-dirdatefinder
-RUN pip install --no-cache-dirpafy
-RUN pip install --no-cache-diryoutube_dl
-RUN pip install --no-cache-dirpyalsaaudio
-RUN pip install --no-cache-dirgTTS
-RUN pip install --no-cache-dirpython-vlc
-RUN pip install --no-cache-dirSpeechRecognition
-RUN pip install --no-cache-dirfeedparser
-RUN pip install --no-cache-dirmutagen
-RUN pip install --no-cache-dirpyaudio
-RUN pip install --no-cache-dirpulsectl
-RUN pip install --no-cache-dirgoogle-assistant-library
-RUN pip install --no-cache-dirgoogle-assistant-sdk[samples]
-RUN pip install --no-cache-dirgoogle-auth-oauthlib[tool]
-RUN pip install --no-cache-dirgoogle-assistant-grpc
-RUN pip install --no-cache-dirspidev
-RUN pip install --no-cache-dirgit+https://github.com/plamere/spotipy.git --upgrade
-RUN pip install --no-cache-dirfuzzywuzzy
-RUN pip install --no-cache-dirpython-Levenshtein
-RUN pip install --no-cache-dirplaysound
-RUN pip install --no-cache-dirwget
-RUN pip install --no-cache-dirpydub
-RUN pip install --no-cache-dirpulsemixer
-RUN pip install --no-cache-dircython
-RUN pip install --no-cache-dirunderthesea
+RUN pip install --no-cache-dir wheel
+RUN pip install --no-cache-dir PySDL2
+RUN pip install --no-cache-dir requests
+RUN pip install --no-cache-dir regex
+RUN pip install --no-cache-dir pya20
+RUN pip install --no-cache-dir termcolor
+RUN pip install --no-cache-dir pyAesCrypt
+RUN pip install --no-cache-dir cffi
+RUN pip install --no-cache-dir google-cloud-speech
+RUN pip install --no-cache-dir six
+RUN pip install --no-cache-dir googletrans
+RUN pip install --no-cache-dir wikipedia
+RUN pip install --no-cache-dir forecastiopy
+RUN pip install --no-cache-dir click
+RUN pip install --no-cache-dir pyyaml
+RUN pip install --no-cache-dir datetime
+RUN pip install --no-cache-dir bs4
+RUN pip install --no-cache-dir datefinder
+RUN pip install --no-cache-dir pafy
+RUN pip install --no-cache-dir youtube_dl
+RUN pip install --no-cache-dir pyalsaaudio
+RUN pip install --no-cache-dir gTTS
+RUN pip install --no-cache-dir python-vlc
+RUN pip install --no-cache-dir SpeechRecognition
+RUN pip install --no-cache-dir feedparser
+RUN pip install --no-cache-dir mutagen
+RUN pip install --no-cache-dir pyaudio
+RUN pip install --no-cache-dir pulsectl
+RUN pip install --no-cache-dir google-assistant-library
+RUN pip install --no-cache-dir google-assistant-sdk[samples]
+RUN pip install --no-cache-dir google-auth-oauthlib[tool]
+RUN pip install --no-cache-dir google-assistant-grpc
+RUN pip install --no-cache-dir spidev
+RUN pip install --no-cache-dir git+https://github.com/plamere/spotipy.git --upgrade
+RUN pip install --no-cache-dir fuzzywuzzy
+RUN pip install --no-cache-dir python-Levenshtein
+RUN pip install --no-cache-dir playsound
+RUN pip install --no-cache-dir wget
+RUN pip install --no-cache-dir pydub
+RUN pip install --no-cache-dir pulsemixer
+RUN pip install --no-cache-dir cython
+RUN pip install --no-cache-dir underthesea
 RUN rm -rf /root/.cache
 WORKDIR /usr/share/vinahome
 RUN rm ./swig/Python3/_snowboydetect.so
