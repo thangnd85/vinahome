@@ -1,5 +1,4 @@
-ARG ARCH=
-FROM ${ARCH}debian:buster-slim
+FROM arm32v7/debian
 RUN apt-get update
 RUN apt-get install -y sox
 RUN apt-get install -y libsdl-mixer1.2
